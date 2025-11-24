@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVPERFVTVRE — Find Your AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-tertiary: #1a1a1a;
+      --text-primary: #e8e8e8;
+      --text-secondary: #888888;
+      --text-muted: #555555;
+      --accent: #c9ff00;
+      --accent-dim: #6b8700;
+      --border: #2a2a2a;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Cormorant Garamond', serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-mono);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    /* Landing Screen */
+    .screen {
+      display: none;
+      flex: 1;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .landing-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 0;
+    }
+
+    .headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .subhead {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 1rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .cta-button:hover {
+      color: var(--bg-primary);
+    }
+
+    .cta-button:hover::before {
+      left: 0;
+    }
+
+    .cta-button .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* Quiz Screen */
+    .quiz-header {
+      margin-bottom: 3rem;
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: var(--border);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+
+    .step-indicator {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .question {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 5vw, 2.25rem);
+      font-weight: 400;
+      margin-bottom: 3rem;
+      line-height: 1.3;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .option:hover {
+      border-color: var(--text-muted);
+      background: var(--bg-tertiary);
+    }
+
+    .option.selected {
+      border-color: var(--accent);
+      background: rgba(201, 255, 0, 0.05);
+    }
+
+    .option-marker {
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .option.selected .option-marker {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .option-text {
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+
+    .option-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+
+    .nav-button {
+      padding: 0.875rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-button.back {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .nav-button.back:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    .nav-button.next {
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: var(--bg-primary);
+      margin-left: auto;
+    }
+
+    .nav-button.next:hover {
+      background: #d4ff33;
+    }
+
+    .nav-button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Results Screen */
+    .results-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .results-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .results-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 400;
+    }
+
+    .recommendation-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--accent);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .recommendation-card::before {
+      content: 'RECOMMENDED';
+      position: absolute;
+      top: -0.6rem;
+      left: 2rem;
+      background: var(--bg-primary);
+      padding: 0 0.75rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .rec-name {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .rec-tagline {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .rec-reasoning {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      padding: 1.25rem;
+      background: var(--bg-tertiary);
+      border-left: 2px solid var(--accent-dim);
+    }
+
+    .rec-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .spec {
+      padding: 1rem;
+      background: var(--bg-tertiary);
+    }
+
+    .spec-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .spec-value {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+    }
+
+    .rec-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 1rem 1.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .rec-cta:hover {
+      background: #d4ff33;
+    }
+
+    .alternatives {
+      margin-top: 3rem;
+    }
+
+    .alt-header {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .alt-cards {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .alt-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .alt-card:hover {
+      border-color: var(--text-muted);
+    }
+
+    .alt-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .alt-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .alt-reason {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .alt-link {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--accent);
+      transition: all 0.2s ease;
+    }
+
+    .alt-link:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .restart-section {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .restart-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.875rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .restart-button:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      .recommendation-card {
+        padding: 1.75rem;
+      }
+
+      .rec-specs {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .alt-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">SVPERF<span>V</span>TVRE</div>
+    </header>
+
+    <!-- Landing Screen -->
+    <main id="landing" class="screen active">
+      <div class="landing-content">
+        <h1 class="headline">Find the <em>right</em> AI<br>for your task</h1>
+        <p class="subhead">
+          Too many models. Too much noise. Answer a few questions and we'll cut through the hype to recommend the AI that actually fits your needs.
+        </p>
+        <button class="cta-button" onclick="startQuiz()">
+          Begin Assessment
+          <span class="arrow">→</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Quiz Screen -->
+    <main id="quiz" class="screen">
+      <div class="quiz-header">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="step-indicator" id="stepIndicator">Step 1 of 5</div>
+      </div>
+
+      <h2 class="question" id="questionText"></h2>
+
+      <div class="options" id="optionsContainer"></div>
+
+      <div class="nav-buttons">
+        <button class="nav-button back" id="backButton" onclick="prevStep()">← Back</button>
+        <button class="nav-button next" id="nextButton" onclick="nextStep()" disabled>Continue →</button>
+      </div>
+    </main>
+
+    <!-- Results Screen -->
+    <main id="results" class="screen">
+      <div class="results-header">
+        <div class="results-label">Your Recommendation</div>
+        <h2 class="results-title" id="resultsTitle">Based on your needs...</h2>
+      </div>
+
+      <div class="recommendation-card" id="recommendationCard">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="alternatives">
+        <div class="alt-header">Also Consider</div>
+        <div class="alt-cards" id="alternativesContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="restart-section">
+        <button class="restart-button" onclick="restart()">Start Over</button>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2025 SVPERFVTVRE</span>
+      <a href="#">About</a>
+    </footer>
+  </div>
+
+  <script>
+    // Quiz State
+    let currentStep = 0;
+    const answers = {};
+
+    // Quiz Questions
+    const questions = [
+      {
+        id: 'task',
+        question: 'What do you primarily need AI to help you with?',
+        options: [
+          { value: 'writing', label: 'Writing & Content', desc: 'Emails, articles, marketing copy, creative writing' },
+          { value: 'coding', label: 'Coding & Development', desc: 'Writing code, debugging, code review, documentation' },
+          { value: 'research', label: 'Research & Analysis', desc: 'Finding information, summarizing documents, fact-checking' },
+          { value: 'images', label: 'Image Generation', desc: 'Creating visuals, art, design assets, photos' },
+          { value: 'data', label: 'Data & Analysis', desc: 'Spreadsheets, data processing, charts, insights' },
+          { value: 'chat', label: 'General Assistant', desc: 'Brainstorming, learning, everyday questions' }
+        ]
+      },
+      {
+        id: 'priority',
+        question: 'What matters most to you in an AI tool?',
+        options: [
+          { value: 'accuracy', label: 'Accuracy', desc: 'Getting correct, reliable, nuanced responses' },
+          { value: 'speed', label: 'Speed', desc: 'Fast responses, no waiting around' },
+          { value: 'cost', label: 'Low Cost', desc: 'Free or very affordable options' },
+          { value: 'privacy', label: 'Privacy', desc: 'Data stays private, runs locally if possible' },
+          { value: 'creativity', label: 'Creativity', desc: 'Novel ideas, unexpected connections, originality' }
+        ]
+      },
+      {
+        id: 'experience',
+        question: 'How would you describe your technical experience?',
+        options: [
+          { value: 'beginner', label: 'Just Getting Started', desc: 'New to AI tools, prefer simple interfaces' },
+          { value: 'intermediate', label: 'Comfortable', desc: 'Used ChatGPT or similar, know the basics' },
+          { value: 'advanced', label: 'Power User', desc: 'Familiar with APIs, prompting techniques, multiple tools' }
+        ]
+      },
+      {
+        id: 'budget',
+        question: 'What's your budget for AI tools?',
+        options: [
+          { value: 'free', label: 'Free Only', desc: 'Not looking to pay right now' },
+          { value: 'low', label: 'Up to $20/month', desc: 'Willing to pay for better quality' },
+          { value: 'medium', label: 'Up to $50/month', desc: 'Happy to invest in the right tool' },
+          { value: 'unlimited', label: 'Whatever It Takes', desc: 'Quality matters more than cost' }
+        ]
+      },
+      {
+        id: 'requirement',
+        question: 'Any specific requirements?',
+        options: [
+          { value: 'offline', label: 'Must Work Offline', desc: 'Need to run locally without internet' },
+          { value: 'api', label: 'Need API Access', desc: 'Want to build apps or automate workflows' },
+          { value: 'mobile', label: 'Mobile App Required', desc: 'Need to use on phone regularly' },
+          { value: 'none', label: 'No Special Requirements', desc: 'Web access works fine for me' }
+        ]
+      }
+    ];
+
+    // AI Models Database
+    const models = {
+      claude: {
+        name: 'Claude',
+        tagline: 'By Anthropic — Known for nuance, safety, and long-form excellence',
+        url: 'https://claude.ai',
+        pricing: 'Free tier / $20/mo Pro',
+        bestFor: 'Writing, analysis, coding',
+        strengths: ['Nuanced reasoning', 'Long context window', 'Strong at writing', 'Thoughtful responses']
+      },
+      chatgpt: {
+        name: 'ChatGPT',
+        tagline: 'By OpenAI — The household name with broad capabilities',
+        url: 'https://chat.openai.com',
+        pricing: 'Free tier / $20/mo Plus',
+        bestFor: 'General tasks, coding, plugins',
+        strengths: ['Versatile', 'Large ecosystem', 'Good at coding', 'Voice & vision']
+      },
+      gemini: {
+        name: 'Gemini',
+        tagline: 'By Google — Integrated with Google\'s ecosystem',
+        url: 'https://gemini.google.com',
+        pricing: 'Free tier / $20/mo Advanced',
+        bestFor: 'Research, Google integration',
+        strengths: ['Google integration', 'Multimodal', 'Large context', 'Web access']
+      },
+      perplexity: {
+        name: 'Perplexity',
+        tagline: 'AI-powered search engine with citations',
+        url: 'https://perplexity.ai',
+        pricing: 'Free tier / $20/mo Pro',
+        bestFor: 'Research, fact-finding',
+        strengths: ['Real-time search', 'Source citations', 'Research-focused', 'Accurate facts']
+      },
+      copilot: {
+        name: 'GitHub Copilot',
+        tagline: 'AI pair programmer built into your IDE',
+        url: 'https://github.com/features/copilot',
+        pricing: '$10/mo Individual',
+        bestFor: 'Coding, development',
+        strengths: ['IDE integration', 'Code completion', 'Context-aware', 'Multi-language']
+      },
+      midjourney: {
+        name: 'Midjourney',
+        tagline: 'Leading AI image generation for stunning visuals',
+        url: 'https://midjourney.com',
+        pricing: '$10-60/mo',
+        bestFor: 'Image generation, art',
+        strengths: ['Beautiful aesthetics', 'Artistic control', 'Consistent style', 'Active community']
+      },
+      dalle: {
+        name: 'DALL-E 3',
+        tagline: 'OpenAI\'s image generator, integrated with ChatGPT',
+        url: 'https://openai.com/dall-e-3',
+        pricing: 'Included with ChatGPT Plus',
+        bestFor: 'Image generation',
+        strengths: ['Text rendering', 'ChatGPT integration', 'Easy to use', 'Good at instructions']
+      },
+      ollama: {
+        name: 'Ollama',
+        tagline: 'Run open-source models locally on your machine',
+        url: 'https://ollama.ai',
+        pricing: 'Free (open source)',
+        bestFor: 'Privacy, offline use',
+        strengths: ['100% private', 'Runs offline', 'No API costs', 'Multiple models']
+      },
+      cursor: {
+        name: 'Cursor',
+        tagline: 'AI-first code editor with deep integration',
+        url: 'https://cursor.sh',
+        pricing: 'Free tier / $20/mo Pro',
+        bestFor: 'Coding, development',
+        strengths: ['Full codebase context', 'Multiple models', 'Built-in AI', 'Fast iteration']
+      }
+    };
+
+    // Recommendation Logic
+    function getRecommendation() {
+      const { task, priority, experience, budget, requirement } = answers;
+      
+      let primary, alternatives = [];
+
+      // Special case: offline requirement
+      if (requirement === 'offline') {
+        primary = 'ollama';
+        alternatives = ['cursor', 'copilot'];
+        return { primary, alternatives, reasoning: generateReasoning('ollama') };
+      }
+
+      // Special case: images
+      if (task === 'images') {
+        primary = 'midjourney';
+        alternatives = ['dalle', 'chatgpt'];
+        return { primary, alternatives, reasoning: generateReasoning('midjourney') };
+      }
+
+      // Special case: coding with API need
+      if (task === 'coding') {
+        if (requirement === 'api' || experience === 'advanced') {
+          primary = 'cursor';
+          alternatives = ['copilot', 'claude'];
+        } else {
+          primary = 'copilot';
+          alternatives = ['cursor', 'chatgpt'];
+        }
+        return { primary, alternatives, reasoning: generateReasoning(primary) };
+      }
+
+      // Special case: research
+      if (task === 'research') {
+        primary = 'perplexity';
+        alternatives = ['gemini', 'claude'];
+        return { primary, alternatives, reasoning: generateReasoning('perplexity') };
+      }
+
+      // Priority-based for general/writing/data tasks
+      if (priority === 'accuracy' || task === 'writing') {
+        primary = 'claude';
+        alternatives = ['chatgpt', 'gemini'];
+      } else if (priority === 'speed') {
+        primary = 'chatgpt';
+        alternatives = ['gemini', 'claude'];
+      } else if (priority === 'cost' || budget === 'free') {
+        primary = 'gemini';
+        alternatives = ['chatgpt', 'claude'];
+      } else if (priority === 'privacy') {
+        primary = 'ollama';
+        alternatives = ['claude', 'chatgpt'];
+      } else if (priority === 'creativity') {
+        primary = 'claude';
+        alternatives = ['chatgpt', 'midjourney'];
+      } else {
+        primary = 'chatgpt';
+        alternatives = ['claude', 'gemini'];
+      }
+
+      return { primary, alternatives, reasoning: generateReasoning(primary) };
+    }
+
+    function generateReasoning(modelKey) {
+      const model = models[modelKey];
+      const { task, priority, budget } = answers;
+      
+      const taskLabels = {
+        writing: 'writing and content creation',
+        coding: 'coding and development',
+        research: 'research and analysis',
+        images: 'image generation',
+        data: 'data analysis',
+        chat: 'general assistance'
+      };
+
+      const priorityLabels = {
+        accuracy: 'accuracy and reliability',
+        speed: 'speed and responsiveness',
+        cost: 'cost-effectiveness',
+        privacy: 'privacy and data security',
+        creativity: 'creativity and originality'
+      };
+
+      return `Based on your focus on ${taskLabels[task]} and priority for ${priorityLabels[priority]}, ${model.name} stands out as the strongest match. ${model.strengths.slice(0, 2).join(' and ')} make it particularly well-suited for your needs. ${budget === 'free' ? 'The free tier should cover your initial usage well.' : 'The paid tier unlocks additional capabilities that align with your requirements.'}`;
+    }
+
+    // UI Functions
+    function startQuiz() {
+      document.getElementById('landing').classList.remove('active');
+      document.getElementById('quiz').classList.add('active');
+      renderStep();
+    }
+
+    function renderStep() {
+      const q = questions[currentStep];
+      
+      // Update progress
+      const progress = ((currentStep + 1) / questions.length) * 100;
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      document.getElementById('stepIndicator').textContent = `Step ${currentStep + 1} of ${questions.length}`;
+      
+      // Update question
+      document.getElementById('questionText').textContent = q.question;
+      
+      // Render options
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = q.options.map((opt, idx) => `
+        <div class="option ${answers[q.id] === opt.value ? 'selected' : ''}" 
+             onclick="selectOption('${q.id}', '${opt.value}', this)">
+          <div class="option-marker">${String.fromCharCode(65 + idx)}</div>
+          <div>
+            <div class="option-text">${opt.label}</div>
+            <div class="option-desc">${opt.desc}</div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Update nav buttons
+      document.getElementById('backButton').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+      document.getElementById('nextButton').disabled = !answers[q.id];
+      document.getElementById('nextButton').textContent = currentStep === questions.length - 1 ? 'See Results →' : 'Continue →';
+    }
+
+    function selectOption(questionId, value, element) {
+      answers[questionId] = value;
+      
+      // Update UI
+      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+      
+      // Enable next button
+      document.getElementById('nextButton').disabled = false;
+    }
+
+    function nextStep() {
+      if (currentStep < questions.length - 1) {
+        currentStep++;
+        renderStep();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz').classList.remove('active');
+      document.getElementById('results').classList.add('active');
+      
+      const rec = getRecommendation();
+      const primary = models[rec.primary];
+      
+      // Render primary recommendation
+      document.getElementById('recommendationCard').innerHTML = `
+        <div class="rec-name">${primary.name}</div>
+        <div class="rec-tagline">${primary.tagline}</div>
+        <div class="rec-reasoning">${rec.reasoning}</div>
+        <div class="rec-specs">
+          <div class="spec">
+            <div class="spec-label">Pricing</div>
+            <div class="spec-value">${primary.pricing}</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Best For</div>
+            <div class="spec-value">${primary.bestFor}</div>
+          </div>
+        </div>
+        <a href="${primary.url}" target="_blank" rel="noopener" class="rec-cta">
+          Try ${primary.name} →
+        </a>
+      `;
+      
+      // Render alternatives
+      const altContainer = document.getElementById('alternativesContainer');
+      altContainer.innerHTML = rec.alternatives.map(key => {
+        const alt = models[key];
+        return `
+          <div class="alt-card">
+            <div class="alt-info">
+              <div class="alt-name">${alt.name}</div>
+              <div class="alt-reason">${alt.bestFor}</div>
+            </div>
+            <a href="${alt.url}" target="_blank" rel="noopener" class="alt-link">Visit →</a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function restart() {
+      currentStep = 0;
+      Object.keys(answers).forEach(key => delete answers[key]);
+      
+      document.getElementById('results').classList.remove('active');
+      document.getElementById('landing').classList.add('active');
+    }
+  </script>
+</body>
+</html>
