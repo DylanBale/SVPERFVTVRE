@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVPERFVTVRE — Find Your AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>SVPERFVTVRE — Master Layout</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-primary: #0a0a0a;
@@ -17,544 +18,685 @@
       --text-muted: #555555;
       --accent: #c9ff00;
       --accent-dim: #6b8700;
+      --accent-glow: rgba(201, 255, 0, 0.15);
       --border: #2a2a2a;
-      --font-mono: 'JetBrains Mono', monospace;
-      --font-serif: 'Cormorant Garamond', serif;
+      --font-primary: 'Outfit', sans-serif;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
-      font-size: 16px;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font-mono);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      min-height: 100vh;
-      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* Noise overlay */
+    body {
+      font-family: var(--font-primary);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Spotlight background */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      opacity: 0.03;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 60%;
+      background: radial-gradient(ellipse at center, rgba(201, 255, 0, 0.08) 0%, transparent 70%);
+      filter: blur(40px);
       pointer-events: none;
-      z-index: 1000;
+      z-index: 0;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 2rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      z-index: 1;
     }
 
     /* Header */
     header {
       padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 4rem;
     }
 
     .logo {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      color: var(--text-secondary);
-      text-transform: uppercase;
+      position: relative;
+      font-family: var(--font-primary);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      display: inline-block;
     }
 
-    .logo span {
+    .logo .back {
       color: var(--accent);
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      z-index: 1;
     }
 
-    /* Landing Screen */
-    .screen {
-      display: none;
-      flex: 1;
-      animation: fadeIn 0.5s ease;
+    .logo .front {
+      position: relative;
+      z-index: 2;
+      color: var(--text-primary);
     }
 
-    .screen.active {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .landing-content {
+    /* Main Content */
+    main {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 0;
+      padding: 2rem 0 4rem;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 3rem;
     }
 
     .headline {
-      font-family: var(--font-serif);
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 2rem;
+      font-size: clamp(2.5rem, 7vw, 4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.02em;
     }
 
-    .headline em {
-      font-style: italic;
+    .headline .line1 {
+      display: block;
+      color: var(--text-primary);
+    }
+
+    .headline .line2 {
+      display: block;
+      position: relative;
+    }
+
+    .headline .line2 .back {
+      color: var(--accent);
+      position: absolute;
+      top: -2px;
+      left: 50%;
+      transform: translateX(calc(-50% - 2px));
+      width: 100%;
+      opacity: 0.35;
+    }
+
+    .headline .line2 .front {
+      position: relative;
       color: var(--accent);
     }
 
     .subhead {
-      font-size: 0.875rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
-      max-width: 480px;
-      margin-bottom: 3rem;
-      font-weight: 300;
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+      white-space: nowrap;
     }
 
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 1rem 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+    @media (max-width: 700px) {
+      .subhead {
+        white-space: normal;
+      }
+      
+      .subhead .no-orphan {
+        white-space: nowrap;
+      }
     }
 
-    .cta-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+    /* Prompt Section */
+    .prompt-section {
+      max-width: 650px;
+      margin: 0 auto;
       width: 100%;
-      height: 100%;
-      background: var(--accent);
-      transition: left 0.3s ease;
-      z-index: -1;
     }
 
-    .cta-button:hover {
-      color: var(--bg-primary);
-    }
-
-    .cta-button:hover::before {
-      left: 0;
-    }
-
-    .cta-button .arrow {
-      transition: transform 0.3s ease;
-    }
-
-    .cta-button:hover .arrow {
-      transform: translateX(4px);
-    }
-
-    /* Quiz Screen */
-    .quiz-header {
-      margin-bottom: 3rem;
-    }
-
-    .progress-bar {
-      height: 2px;
-      background: var(--border);
+    .input-wrapper {
+      position: relative;
       margin-bottom: 1.5rem;
-      position: relative;
     }
 
-    .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      transition: width 0.4s ease;
-    }
-
-    .step-indicator {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-
-    .question {
-      font-family: var(--font-serif);
-      font-size: clamp(1.5rem, 5vw, 2.25rem);
-      font-weight: 400;
-      margin-bottom: 3rem;
-      line-height: 1.3;
-    }
-
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 3rem;
-    }
-
-    .option {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.25rem 1.5rem;
+    .prompt-input {
+      width: 100%;
       background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
+      border: 2px solid var(--border);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 1.1rem;
+      padding: 1.5rem;
+      resize: none;
+      min-height: 160px;
+      transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      line-height: 1.6;
     }
 
-    .option:hover {
+    .prompt-input:focus {
+      outline: none;
+      background: var(--bg-tertiary);
+      border-color: var(--accent);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    /* Progress indicator - pulsing border */
+    .input-wrapper.level-1 .prompt-input {
       border-color: var(--text-muted);
-      background: var(--bg-tertiary);
     }
 
-    .option.selected {
+    .input-wrapper.level-1 .prompt-input:focus {
+      border-color: var(--text-muted);
+      box-shadow: 0 0 30px rgba(85, 85, 85, 0.2);
+    }
+
+    .input-wrapper.level-2 .prompt-input {
+      border-color: #ff9500;
+    }
+
+    .input-wrapper.level-2 .prompt-input:focus {
+      border-color: #ff9500;
+      box-shadow: 0 0 30px rgba(255, 149, 0, 0.2);
+    }
+
+    .input-wrapper.level-3 .prompt-input {
       border-color: var(--accent);
-      background: rgba(201, 255, 0, 0.05);
     }
 
-    .option-marker {
-      width: 20px;
-      height: 20px;
-      border: 1px solid var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
+    .input-wrapper.level-3 .prompt-input:not(:focus) {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .input-wrapper.level-3 .prompt-input:focus {
+      box-shadow: 0 0 40px var(--accent-glow);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 255, 0, 0.4); }
+      50% { box-shadow: 0 0 20px 0 rgba(201, 255, 0, 0.2); }
+    }
+
+    .prompt-input::placeholder {
       color: var(--text-muted);
-      flex-shrink: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .option.selected .option-marker {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--bg-primary);
+    .prompt-input:focus::placeholder {
+      opacity: 0.5;
     }
 
-    .option-text {
-      font-size: 0.875rem;
-      font-weight: 400;
-    }
-
-    .option-desc {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-top: 0.25rem;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: auto;
-      padding-top: 2rem;
-    }
-
-    .nav-button {
-      padding: 0.875rem 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .nav-button.back {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-
-    .nav-button.back:hover {
-      border-color: var(--text-secondary);
-      color: var(--text-primary);
-    }
-
-    .nav-button.next {
-      background: var(--accent);
-      border: 1px solid var(--accent);
-      color: var(--bg-primary);
-      margin-left: auto;
-    }
-
-    .nav-button.next:hover {
-      background: #d4ff33;
-    }
-
-    .nav-button:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    /* Results Screen */
-    .results-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .results-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .results-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.75rem, 5vw, 2.5rem);
-      font-weight: 400;
-    }
-
-    .recommendation-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--accent);
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .recommendation-card::before {
-      content: 'RECOMMENDED';
-      position: absolute;
-      top: -0.6rem;
-      left: 2rem;
-      background: var(--bg-primary);
-      padding: 0 0.75rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-    }
-
-    .rec-name {
-      font-family: var(--font-serif);
-      font-size: 2rem;
-      font-weight: 400;
-      margin-bottom: 0.5rem;
-    }
-
-    .rec-tagline {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-    }
-
-    .rec-reasoning {
-      font-size: 0.8rem;
-      line-height: 1.7;
-      color: var(--text-primary);
-      margin-bottom: 2rem;
-      padding: 1.25rem;
-      background: var(--bg-tertiary);
-      border-left: 2px solid var(--accent-dim);
-    }
-
-    .rec-specs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .spec {
-      padding: 1rem;
-      background: var(--bg-tertiary);
-    }
-
-    .spec-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .spec-value {
-      font-size: 0.875rem;
-      color: var(--text-primary);
-    }
-
-    .rec-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: var(--accent);
-      color: var(--bg-primary);
-      padding: 1rem 1.75rem;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .rec-cta:hover {
-      background: #d4ff33;
-    }
-
-    .alternatives {
-      margin-top: 3rem;
-    }
-
-    .alt-header {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .alt-cards {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .alt-card {
+    /* Action Row */
+    .action-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 1.5rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      transition: all 0.2s ease;
+      gap: 1rem;
+      margin-top: 0.5rem;
     }
 
-    .alt-card:hover {
-      border-color: var(--text-muted);
-    }
-
-    .alt-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .alt-name {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .alt-reason {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
-
-    .alt-link {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      text-decoration: none;
-      text-transform: uppercase;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--accent);
-      transition: all 0.2s ease;
-    }
-
-    .alt-link:hover {
+    .analyze-btn {
       background: var(--accent);
       color: var(--bg-primary);
+      border: none;
+      padding: 1.15rem 2.5rem;
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    .restart-section {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      text-align: center;
+    .analyze-btn:hover {
+      background: #d4ff33;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201, 255, 0, 0.2);
     }
 
-    .restart-button {
+    .analyze-btn:active {
+      transform: translateY(0);
+    }
+
+    .analyze-btn .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .analyze-btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .input-hints {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hint {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hint-icon {
+      opacity: 0.6;
+    }
+
+    /* Quality Indicator */
+    .quality-indicator {
+      transition: all 0.3s ease;
+    }
+
+    .quality-indicator .quality-icon {
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .quality-indicator.level-1 .quality-icon {
+      color: var(--text-muted);
+    }
+
+    .quality-indicator.level-2 .quality-icon {
+      color: #ff9500;
+    }
+
+    .quality-indicator.level-3 {
+      color: var(--accent);
+    }
+
+    .quality-indicator.level-3 .quality-icon {
+      color: var(--accent);
+      animation: pulseGreen 0.6s ease;
+    }
+
+    .quality-indicator.level-3 .quality-text {
+      color: var(--accent);
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    /* File Upload */
+    .upload-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      min-height: 36px;
+    }
+
+    .upload-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .upload-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      padding: 0.875rem 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      border: 1px dashed var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .restart-button:hover {
+    .upload-btn:hover {
       border-color: var(--text-secondary);
+      color: var(--text-secondary);
+    }
+
+    .upload-btn .icon {
+      font-size: 1rem;
+    }
+
+    .upload-input {
+      display: none;
+    }
+
+    .file-limits {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Attached File */
+    .attached-file {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    .attached-file.visible {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .attached-file .file-icon {
+      color: var(--accent);
+    }
+
+    .attached-file .file-name {
       color: var(--text-primary);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .attached-file .file-size {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+
+    .attached-file .remove-file {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      font-size: 1rem;
+      line-height: 1;
+      transition: color 0.2s ease;
+      margin-left: auto;
+    }
+
+    .attached-file .remove-file:hover {
+      color: #ff4444;
+    }
+
+    /* Upload Error */
+    .upload-error {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ff4444;
+      font-size: 0.8rem;
+      animation: shake 0.4s ease;
+    }
+
+    .upload-error.visible {
+      display: flex;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Examples Section */
+    .examples-section {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .examples-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .examples-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .example-chip {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .example-chip:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+    }
+
+    /* Bottom Quiz Link */
+    .bottom-section {
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 300px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-text {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .quiz-prompt {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .quiz-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .quiz-link .arrow {
+      transition: transform 0.2s ease;
+      font-size: 0.8rem;
+    }
+
+    .quiz-link:hover .arrow {
+      transform: translateX(4px);
     }
 
     /* Footer */
     footer {
-      margin-top: auto;
       padding: 2rem 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.7rem;
+      text-align: center;
+      font-size: 0.75rem;
       color: var(--text-muted);
-    }
-
-    footer a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    footer a:hover {
-      color: var(--accent);
     }
 
     /* Responsive */
     @media (max-width: 600px) {
       .container {
-        padding: 1.5rem;
+        padding: 1.25rem;
+        padding-bottom: env(safe-area-inset-bottom, 1.25rem);
       }
 
-      .recommendation-card {
-        padding: 1.75rem;
+      header {
+        padding: 1.5rem 0;
       }
 
-      .rec-specs {
-        grid-template-columns: 1fr 1fr;
+      .logo {
+        font-size: 1.2rem;
       }
 
-      .alt-card {
+      main {
+        padding: 1rem 0 2rem;
+      }
+
+      .hero-section {
+        margin-bottom: 2rem;
+      }
+
+      .headline {
+        font-size: clamp(1.75rem, 10vw, 2.5rem);
+        margin-bottom: 1rem;
+      }
+
+      .subhead {
+        font-size: 0.95rem;
+      }
+
+      .prompt-input {
+        font-size: 16px; /* Prevents iOS zoom */
+        padding: 1.25rem;
+        min-height: 140px;
+      }
+
+      .action-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .analyze-btn {
+        justify-content: center;
+        padding: 1rem 2rem;
+        min-height: 48px; /* Touch target */
+      }
+
+      .input-hints {
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .upload-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 0.75rem;
+      }
+
+      .upload-btn {
+        min-height: 44px; /* Touch target */
+      }
+
+      .file-limits {
+        font-size: 0.65rem;
+      }
+
+      .examples-section {
+        margin-top: 2rem;
+      }
+
+      .examples-row {
+        gap: 0.5rem;
+      }
+
+      .example-chip {
+        padding: 0.65rem 0.9rem;
+        font-size: 0.75rem;
+        min-height: 40px; /* Touch target */
+        display: flex;
+        align-items: center;
+      }
+
+      .bottom-section {
+        margin-top: 3rem;
+      }
+
+      .quiz-link {
+        padding: 0.875rem 1.5rem;
+        min-height: 48px; /* Touch target */
       }
 
       footer {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
+        padding: 1.5rem 0;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 380px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .logo {
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+      }
+
+      .headline {
+        font-size: 1.5rem;
+      }
+
+      .subhead {
+        font-size: 0.875rem;
+      }
+
+      .prompt-input {
+        padding: 1rem;
+        font-size: 16px; /* Prevents iOS zoom */
+      }
+
+      .analyze-btn {
+        font-size: 0.9rem;
+      }
+
+      .example-chip {
+        font-size: 0.7rem;
+        padding: 0.6rem 0.75rem;
       }
     }
   </style>
@@ -562,409 +704,362 @@
 <body>
   <div class="container">
     <header>
-      <div class="logo">SVPERF<span>V</span>TVRE</div>
+      <div class="logo">
+        <span class="back">SVPERFVTVRE</span>
+        <span class="front">SVPERFVTVRE</span>
+      </div>
     </header>
 
-    <!-- Landing Screen -->
-    <main id="landing" class="screen active">
-      <div class="landing-content">
-        <h1 class="headline">Find the <em>right</em> AI<br>for your task</h1>
-        <p class="subhead">
-          Too many models. Too much noise. Answer a few questions and we'll cut through the hype to recommend the AI that actually fits your needs.
-        </p>
-        <button class="cta-button" onclick="startQuiz()">
-          Begin Assessment
+    <main>
+      <div class="hero-section">
+        <h1 class="headline">
+          <span class="line1">Paste your prompt.</span>
+          <span class="line2">
+            <span class="back">Find your Model.</span>
+            <span class="front">Find your Model.</span>
+          </span>
+        </h1>
+        <p class="subhead">Skip the research. Describe your task and we'll <span class="no-orphan">find the perfect model.</span></p>
+      </div>
+
+      <div class="prompt-section">
+        <div class="input-wrapper">
+          <textarea 
+            class="prompt-input" 
+            id="promptInput"
+            placeholder="Describe what you're trying to accomplish..."
+          ></textarea>
+        </div>
+
+        <div class="upload-row">
+          <div class="upload-left">
+            <label class="upload-btn" id="uploadBtn">
+              <span class="icon">📎</span>
+              <span>Attach file</span>
+              <input type="file" class="upload-input" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.txt,.csv,.json,.md">
+            </label>
+            <div class="attached-file" id="attachedFile">
+              <span class="file-icon">📄</span>
+              <span class="file-name" id="fileName"></span>
+              <span class="file-size" id="fileSize"></span>
+              <button class="remove-file" id="removeFile">×</button>
+            </div>
+            <div class="upload-error" id="uploadError">
+              <span>⚠</span>
+              <span id="errorText"></span>
+            </div>
+          </div>
+          <span class="file-limits">PDF, images, text • Max 10MB</span>
+        </div>
+        
+        <div class="action-row">
+          <button class="analyze-btn">
+            Analyze & Recommend
+            <span class="arrow">→</span>
+          </button>
+          <div class="input-hints">
+            <span class="hint">
+              <span class="hint-icon">⌘</span>
+              <span>Enter to submit</span>
+            </span>
+            <span class="hint quality-indicator" id="qualityIndicator">
+              <span class="quality-icon" id="qualityIcon">○</span>
+              <span class="quality-text" id="qualityText">Be specific</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="examples-section">
+          <div class="examples-label">Try an example</div>
+          <div class="examples-row">
+            <span class="example-chip">Write a marketing email</span>
+            <span class="example-chip">Debug my Python code</span>
+            <span class="example-chip">Summarize this PDF</span>
+            <span class="example-chip">Generate product images</span>
+            <span class="example-chip">Analyze sales data</span>
+            <span class="example-chip">Brainstorm app ideas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-section">
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">or</span>
+          <div class="divider-line"></div>
+        </div>
+        <p class="quiz-prompt">Not sure what you need yet?</p>
+        <a class="quiz-link">
+          Take the guided quiz
           <span class="arrow">→</span>
-        </button>
-      </div>
-    </main>
-
-    <!-- Quiz Screen -->
-    <main id="quiz" class="screen">
-      <div class="quiz-header">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="step-indicator" id="stepIndicator">Step 1 of 5</div>
-      </div>
-
-      <h2 class="question" id="questionText"></h2>
-
-      <div class="options" id="optionsContainer"></div>
-
-      <div class="nav-buttons">
-        <button class="nav-button back" id="backButton" onclick="prevStep()">← Back</button>
-        <button class="nav-button next" id="nextButton" onclick="nextStep()" disabled>Continue →</button>
-      </div>
-    </main>
-
-    <!-- Results Screen -->
-    <main id="results" class="screen">
-      <div class="results-header">
-        <div class="results-label">Your Recommendation</div>
-        <h2 class="results-title" id="resultsTitle">Based on your needs...</h2>
-      </div>
-
-      <div class="recommendation-card" id="recommendationCard">
-        <!-- Populated by JS -->
-      </div>
-
-      <div class="alternatives">
-        <div class="alt-header">Also Consider</div>
-        <div class="alt-cards" id="alternativesContainer">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
-      <div class="restart-section">
-        <button class="restart-button" onclick="restart()">Start Over</button>
+        </a>
       </div>
     </main>
 
     <footer>
-      <span>© 2025 SVPERFVTVRE</span>
-      <a href="#">About</a>
+      © 2025 SVPERFVTVRE
     </footer>
   </div>
 
   <script>
-    // Quiz State
-    let currentStep = 0;
-    const answers = {};
+    const promptInput = document.getElementById('promptInput');
+    const inputWrapper = document.querySelector('.input-wrapper');
+    const qualityIndicator = document.getElementById('qualityIndicator');
+    const qualityIcon = document.getElementById('qualityIcon');
+    const qualityText = document.getElementById('qualityText');
 
-    // Quiz Questions
-    const questions = [
-      {
-        id: 'task',
-        question: 'What do you primarily need AI to help you with?',
-        options: [
-          { value: 'writing', label: 'Writing & Content', desc: 'Emails, articles, marketing copy, creative writing' },
-          { value: 'coding', label: 'Coding & Development', desc: 'Writing code, debugging, code review, documentation' },
-          { value: 'research', label: 'Research & Analysis', desc: 'Finding information, summarizing documents, fact-checking' },
-          { value: 'images', label: 'Image Generation', desc: 'Creating visuals, art, design assets, photos' },
-          { value: 'data', label: 'Data & Analysis', desc: 'Spreadsheets, data processing, charts, insights' },
-          { value: 'chat', label: 'General Assistant', desc: 'Brainstorming, learning, everyday questions' }
-        ]
-      },
-      {
-        id: 'priority',
-        question: 'What matters most to you in an AI tool?',
-        options: [
-          { value: 'accuracy', label: 'Accuracy', desc: 'Getting correct, reliable, nuanced responses' },
-          { value: 'speed', label: 'Speed', desc: 'Fast responses, no waiting around' },
-          { value: 'cost', label: 'Low Cost', desc: 'Free or very affordable options' },
-          { value: 'privacy', label: 'Privacy', desc: 'Data stays private, runs locally if possible' },
-          { value: 'creativity', label: 'Creativity', desc: 'Novel ideas, unexpected connections, originality' }
-        ]
-      },
-      {
-        id: 'experience',
-        question: 'How would you describe your technical experience?',
-        options: [
-          { value: 'beginner', label: 'Just Getting Started', desc: 'New to AI tools, prefer simple interfaces' },
-          { value: 'intermediate', label: 'Comfortable', desc: 'Used ChatGPT or similar, know the basics' },
-          { value: 'advanced', label: 'Power User', desc: 'Familiar with APIs, prompting techniques, multiple tools' }
-        ]
-      },
-      {
-        id: 'budget',
-        question: 'What's your budget for AI tools?',
-        options: [
-          { value: 'free', label: 'Free Only', desc: 'Not looking to pay right now' },
-          { value: 'low', label: 'Up to $20/month', desc: 'Willing to pay for better quality' },
-          { value: 'medium', label: 'Up to $50/month', desc: 'Happy to invest in the right tool' },
-          { value: 'unlimited', label: 'Whatever It Takes', desc: 'Quality matters more than cost' }
-        ]
-      },
-      {
-        id: 'requirement',
-        question: 'Any specific requirements?',
-        options: [
-          { value: 'offline', label: 'Must Work Offline', desc: 'Need to run locally without internet' },
-          { value: 'api', label: 'Need API Access', desc: 'Want to build apps or automate workflows' },
-          { value: 'mobile', label: 'Mobile App Required', desc: 'Need to use on phone regularly' },
-          { value: 'none', label: 'No Special Requirements', desc: 'Web access works fine for me' }
-        ]
+    // Quality scoring function
+    function calculateQuality(text) {
+      let score = 0;
+      const trimmed = text.trim();
+      
+      if (!trimmed) return { score: 0, level: 0, message: 'Be specific' };
+
+      const charCount = trimmed.length;
+      const wordCount = trimmed.split(/\s+/).filter(w => w.length > 0).length;
+      
+      // Base score from length
+      if (charCount > 20) score += 10;
+      if (charCount > 50) score += 15;
+      if (charCount > 100) score += 15;
+      if (charCount > 150) score += 10;
+
+      // Word count bonus
+      if (wordCount >= 5) score += 10;
+      if (wordCount >= 10) score += 10;
+      if (wordCount >= 15) score += 5;
+
+      // Context indicators (action words, specificity)
+      const actionWords = /\b(write|create|build|analyze|summarize|explain|help|generate|design|develop|debug|review|translate|convert|compare|find|search|make|draft|edit|improve|optimize|brainstorm)\b/i;
+      const hasAction = actionWords.test(trimmed);
+      if (hasAction) score += 10;
+
+      // Output format indicators
+      const formatWords = /\b(code|script|email|report|list|table|json|csv|markdown|html|python|javascript|sql|essay|article|blog|post|summary|outline|app|ideas|data)\b/i;
+      const hasFormat = formatWords.test(trimmed);
+      if (hasFormat) score += 10;
+
+      // Context/domain indicators
+      const contextWords = /\b(for|about|using|with|from|into|based on|regarding|related to|in the style of)\b/i;
+      const hasContext = contextWords.test(trimmed);
+      if (hasContext) score += 5;
+
+      // Specificity bonus (numbers, quotes, specific terms)
+      const hasNumbers = /\d+/.test(trimmed);
+      const hasQuotes = /"[^"]+"|'[^']+'/.test(trimmed);
+      if (hasNumbers) score += 5;
+      if (hasQuotes) score += 5;
+
+      // Determine level and message
+      let level, message, icon;
+      
+      if (score < 25) {
+        level = 1;
+        message = 'Add more detail';
+        icon = '○';
+      } else if (score < 50) {
+        level = 2;
+        message = 'Getting there...';
+        icon = '◐';
+      } else {
+        level = 3;
+        message = 'Ready to analyze';
+        icon = '●';
       }
+
+      // Cap percentage at 100
+      const percentage = Math.min(score, 100);
+
+      return { score: percentage, level, message, icon };
+    }
+
+    // Update UI based on quality
+    function updateQualityIndicator() {
+      const result = calculateQuality(promptInput.value);
+      
+      // Update indicator class
+      qualityIndicator.className = 'hint quality-indicator';
+      inputWrapper.className = 'input-wrapper';
+      
+      if (result.level > 0) {
+        qualityIndicator.classList.add('level-' + result.level);
+        inputWrapper.classList.add('level-' + result.level);
+      }
+
+      // Update icon and text
+      qualityIcon.textContent = result.icon;
+      qualityText.textContent = result.message;
+    }
+
+    // Listen for input
+    promptInput.addEventListener('input', updateQualityIndicator);
+
+    // Example chip click handlers
+    const exampleChips = document.querySelectorAll('.example-chip');
+    exampleChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const examples = {
+          'Write a marketing email': 'Write a marketing email for a new SaaS product launch targeting small business owners. The tone should be professional but friendly, highlighting time-saving benefits.',
+          'Debug my Python code': 'Debug my Python script that scrapes product data from e-commerce sites. It\'s throwing a timeout error when processing pages with lazy-loaded images.',
+          'Summarize this PDF': 'Summarize a 50-page quarterly earnings report, extracting key financial metrics, YoY comparisons, and forward guidance into a 1-page executive brief.',
+          'Generate product images': 'Generate product photography for a minimalist leather wallet. Style: clean white background, soft shadows, shot from 45-degree angle. For e-commerce listing.',
+          'Analyze sales data': 'Analyze 12 months of sales data to identify seasonal trends, top-performing products, and customer segments. Output as a summary with 3 actionable recommendations.',
+          'Brainstorm app ideas': 'Brainstorm 10 mobile app ideas for busy parents. Focus on time-saving, organization, or family coordination. Include a brief value prop for each.'
+        };
+        
+        promptInput.value = examples[chip.textContent] || chip.textContent;
+        promptInput.focus();
+        updateQualityIndicator();
+      });
+    });
+
+    // Keyboard shortcut (Cmd/Ctrl + Enter to submit)
+    promptInput.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        document.querySelector('.analyze-btn').click();
+      }
+    });
+
+    // File Upload Handling
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const attachedFile = document.getElementById('attachedFile');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const removeFile = document.getElementById('removeFile');
+    const uploadError = document.getElementById('uploadError');
+    const errorText = document.getElementById('errorText');
+
+    // Allowed file types and max size
+    const ALLOWED_TYPES = [
+      'application/pdf',
+      'image/png',
+      'image/jpeg', 
+      'image/gif',
+      'image/webp',
+      'text/plain',
+      'text/csv',
+      'application/json',
+      'text/markdown'
     ];
+    const ALLOWED_EXTENSIONS = ['.pdf', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.txt', '.csv', '.json', '.md'];
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
-    // AI Models Database
-    const models = {
-      claude: {
-        name: 'Claude',
-        tagline: 'By Anthropic — Known for nuance, safety, and long-form excellence',
-        url: 'https://claude.ai',
-        pricing: 'Free tier / $20/mo Pro',
-        bestFor: 'Writing, analysis, coding',
-        strengths: ['Nuanced reasoning', 'Long context window', 'Strong at writing', 'Thoughtful responses']
-      },
-      chatgpt: {
-        name: 'ChatGPT',
-        tagline: 'By OpenAI — The household name with broad capabilities',
-        url: 'https://chat.openai.com',
-        pricing: 'Free tier / $20/mo Plus',
-        bestFor: 'General tasks, coding, plugins',
-        strengths: ['Versatile', 'Large ecosystem', 'Good at coding', 'Voice & vision']
-      },
-      gemini: {
-        name: 'Gemini',
-        tagline: 'By Google — Integrated with Google\'s ecosystem',
-        url: 'https://gemini.google.com',
-        pricing: 'Free tier / $20/mo Advanced',
-        bestFor: 'Research, Google integration',
-        strengths: ['Google integration', 'Multimodal', 'Large context', 'Web access']
-      },
-      perplexity: {
-        name: 'Perplexity',
-        tagline: 'AI-powered search engine with citations',
-        url: 'https://perplexity.ai',
-        pricing: 'Free tier / $20/mo Pro',
-        bestFor: 'Research, fact-finding',
-        strengths: ['Real-time search', 'Source citations', 'Research-focused', 'Accurate facts']
-      },
-      copilot: {
-        name: 'GitHub Copilot',
-        tagline: 'AI pair programmer built into your IDE',
-        url: 'https://github.com/features/copilot',
-        pricing: '$10/mo Individual',
-        bestFor: 'Coding, development',
-        strengths: ['IDE integration', 'Code completion', 'Context-aware', 'Multi-language']
-      },
-      midjourney: {
-        name: 'Midjourney',
-        tagline: 'Leading AI image generation for stunning visuals',
-        url: 'https://midjourney.com',
-        pricing: '$10-60/mo',
-        bestFor: 'Image generation, art',
-        strengths: ['Beautiful aesthetics', 'Artistic control', 'Consistent style', 'Active community']
-      },
-      dalle: {
-        name: 'DALL-E 3',
-        tagline: 'OpenAI\'s image generator, integrated with ChatGPT',
-        url: 'https://openai.com/dall-e-3',
-        pricing: 'Included with ChatGPT Plus',
-        bestFor: 'Image generation',
-        strengths: ['Text rendering', 'ChatGPT integration', 'Easy to use', 'Good at instructions']
-      },
-      ollama: {
-        name: 'Ollama',
-        tagline: 'Run open-source models locally on your machine',
-        url: 'https://ollama.ai',
-        pricing: 'Free (open source)',
-        bestFor: 'Privacy, offline use',
-        strengths: ['100% private', 'Runs offline', 'No API costs', 'Multiple models']
-      },
-      cursor: {
-        name: 'Cursor',
-        tagline: 'AI-first code editor with deep integration',
-        url: 'https://cursor.sh',
-        pricing: 'Free tier / $20/mo Pro',
-        bestFor: 'Coding, development',
-        strengths: ['Full codebase context', 'Multiple models', 'Built-in AI', 'Fast iteration']
-      }
-    };
+    // Security: Basic filename sanitization
+    function sanitizeFilename(name) {
+      // Remove path traversal attempts and dangerous characters
+      return name
+        .replace(/[/\\]/g, '')
+        .replace(/\.\./g, '')
+        .replace(/[<>:"|?*]/g, '')
+        .trim();
+    }
 
-    // Recommendation Logic
-    function getRecommendation() {
-      const { task, priority, experience, budget, requirement } = answers;
+    // Format file size
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    // Check file extension
+    function hasValidExtension(filename) {
+      const ext = '.' + filename.split('.').pop().toLowerCase();
+      return ALLOWED_EXTENSIONS.includes(ext);
+    }
+
+    // Show error
+    function showError(message) {
+      errorText.textContent = message;
+      uploadError.classList.add('visible');
+      uploadBtn.style.display = 'flex';
+      attachedFile.classList.remove('visible');
       
-      let primary, alternatives = [];
+      // Auto-hide after 4 seconds
+      setTimeout(() => {
+        uploadError.classList.remove('visible');
+      }, 4000);
+    }
 
-      // Special case: offline requirement
-      if (requirement === 'offline') {
-        primary = 'ollama';
-        alternatives = ['cursor', 'copilot'];
-        return { primary, alternatives, reasoning: generateReasoning('ollama') };
+    // Handle file selection
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      uploadError.classList.remove('visible');
+      
+      if (!file) return;
+
+      // Security checks
+      const sanitizedName = sanitizeFilename(file.name);
+      
+      // Check file extension
+      if (!hasValidExtension(sanitizedName)) {
+        showError('File type not supported');
+        fileInput.value = '';
+        return;
       }
 
-      // Special case: images
-      if (task === 'images') {
-        primary = 'midjourney';
-        alternatives = ['dalle', 'chatgpt'];
-        return { primary, alternatives, reasoning: generateReasoning('midjourney') };
+      // Check MIME type (can be spoofed but adds a layer)
+      if (!ALLOWED_TYPES.includes(file.type) && file.type !== '') {
+        showError('File type not supported');
+        fileInput.value = '';
+        return;
       }
 
-      // Special case: coding with API need
-      if (task === 'coding') {
-        if (requirement === 'api' || experience === 'advanced') {
-          primary = 'cursor';
-          alternatives = ['copilot', 'claude'];
-        } else {
-          primary = 'copilot';
-          alternatives = ['cursor', 'chatgpt'];
+      // Check file size
+      if (file.size > MAX_SIZE) {
+        showError('File too large (max 10MB)');
+        fileInput.value = '';
+        return;
+      }
+
+      // Check for suspicious patterns in filename
+      if (/\.(exe|bat|cmd|sh|php|js|jar|msi|dll)$/i.test(sanitizedName)) {
+        showError('File type not allowed');
+        fileInput.value = '';
+        return;
+      }
+
+      // Success - show attached file
+      fileName.textContent = sanitizedName;
+      fileSize.textContent = formatFileSize(file.size);
+      attachedFile.classList.add('visible');
+      uploadBtn.style.display = 'none';
+
+      // Update quality indicator (having a file adds context)
+      updateQualityIndicator();
+    });
+
+    // Remove file
+    removeFile.addEventListener('click', () => {
+      fileInput.value = '';
+      attachedFile.classList.remove('visible');
+      uploadBtn.style.display = 'flex';
+      updateQualityIndicator();
+    });
+
+    // Update quality calculation to account for attached files
+    const originalCalculateQuality = calculateQuality;
+    calculateQuality = function(text) {
+      const result = originalCalculateQuality(text);
+      
+      // Bonus for having a file attached
+      if (fileInput.files && fileInput.files[0]) {
+        result.score = Math.min(result.score + 15, 100);
+        
+        // Recalculate level based on new score
+        if (result.score >= 50) {
+          result.level = 3;
+          result.message = 'Ready to analyze';
+          result.icon = '●';
+        } else if (result.score >= 25) {
+          result.level = 2;
+          result.message = 'Getting there...';
+          result.icon = '◐';
         }
-        return { primary, alternatives, reasoning: generateReasoning(primary) };
       }
-
-      // Special case: research
-      if (task === 'research') {
-        primary = 'perplexity';
-        alternatives = ['gemini', 'claude'];
-        return { primary, alternatives, reasoning: generateReasoning('perplexity') };
-      }
-
-      // Priority-based for general/writing/data tasks
-      if (priority === 'accuracy' || task === 'writing') {
-        primary = 'claude';
-        alternatives = ['chatgpt', 'gemini'];
-      } else if (priority === 'speed') {
-        primary = 'chatgpt';
-        alternatives = ['gemini', 'claude'];
-      } else if (priority === 'cost' || budget === 'free') {
-        primary = 'gemini';
-        alternatives = ['chatgpt', 'claude'];
-      } else if (priority === 'privacy') {
-        primary = 'ollama';
-        alternatives = ['claude', 'chatgpt'];
-      } else if (priority === 'creativity') {
-        primary = 'claude';
-        alternatives = ['chatgpt', 'midjourney'];
-      } else {
-        primary = 'chatgpt';
-        alternatives = ['claude', 'gemini'];
-      }
-
-      return { primary, alternatives, reasoning: generateReasoning(primary) };
-    }
-
-    function generateReasoning(modelKey) {
-      const model = models[modelKey];
-      const { task, priority, budget } = answers;
       
-      const taskLabels = {
-        writing: 'writing and content creation',
-        coding: 'coding and development',
-        research: 'research and analysis',
-        images: 'image generation',
-        data: 'data analysis',
-        chat: 'general assistance'
-      };
-
-      const priorityLabels = {
-        accuracy: 'accuracy and reliability',
-        speed: 'speed and responsiveness',
-        cost: 'cost-effectiveness',
-        privacy: 'privacy and data security',
-        creativity: 'creativity and originality'
-      };
-
-      return `Based on your focus on ${taskLabels[task]} and priority for ${priorityLabels[priority]}, ${model.name} stands out as the strongest match. ${model.strengths.slice(0, 2).join(' and ')} make it particularly well-suited for your needs. ${budget === 'free' ? 'The free tier should cover your initial usage well.' : 'The paid tier unlocks additional capabilities that align with your requirements.'}`;
-    }
-
-    // UI Functions
-    function startQuiz() {
-      document.getElementById('landing').classList.remove('active');
-      document.getElementById('quiz').classList.add('active');
-      renderStep();
-    }
-
-    function renderStep() {
-      const q = questions[currentStep];
-      
-      // Update progress
-      const progress = ((currentStep + 1) / questions.length) * 100;
-      document.getElementById('progressFill').style.width = `${progress}%`;
-      document.getElementById('stepIndicator').textContent = `Step ${currentStep + 1} of ${questions.length}`;
-      
-      // Update question
-      document.getElementById('questionText').textContent = q.question;
-      
-      // Render options
-      const container = document.getElementById('optionsContainer');
-      container.innerHTML = q.options.map((opt, idx) => `
-        <div class="option ${answers[q.id] === opt.value ? 'selected' : ''}" 
-             onclick="selectOption('${q.id}', '${opt.value}', this)">
-          <div class="option-marker">${String.fromCharCode(65 + idx)}</div>
-          <div>
-            <div class="option-text">${opt.label}</div>
-            <div class="option-desc">${opt.desc}</div>
-          </div>
-        </div>
-      `).join('');
-      
-      // Update nav buttons
-      document.getElementById('backButton').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
-      document.getElementById('nextButton').disabled = !answers[q.id];
-      document.getElementById('nextButton').textContent = currentStep === questions.length - 1 ? 'See Results →' : 'Continue →';
-    }
-
-    function selectOption(questionId, value, element) {
-      answers[questionId] = value;
-      
-      // Update UI
-      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-      element.classList.add('selected');
-      
-      // Enable next button
-      document.getElementById('nextButton').disabled = false;
-    }
-
-    function nextStep() {
-      if (currentStep < questions.length - 1) {
-        currentStep++;
-        renderStep();
-      } else {
-        showResults();
-      }
-    }
-
-    function prevStep() {
-      if (currentStep > 0) {
-        currentStep--;
-        renderStep();
-      }
-    }
-
-    function showResults() {
-      document.getElementById('quiz').classList.remove('active');
-      document.getElementById('results').classList.add('active');
-      
-      const rec = getRecommendation();
-      const primary = models[rec.primary];
-      
-      // Render primary recommendation
-      document.getElementById('recommendationCard').innerHTML = `
-        <div class="rec-name">${primary.name}</div>
-        <div class="rec-tagline">${primary.tagline}</div>
-        <div class="rec-reasoning">${rec.reasoning}</div>
-        <div class="rec-specs">
-          <div class="spec">
-            <div class="spec-label">Pricing</div>
-            <div class="spec-value">${primary.pricing}</div>
-          </div>
-          <div class="spec">
-            <div class="spec-label">Best For</div>
-            <div class="spec-value">${primary.bestFor}</div>
-          </div>
-        </div>
-        <a href="${primary.url}" target="_blank" rel="noopener" class="rec-cta">
-          Try ${primary.name} →
-        </a>
-      `;
-      
-      // Render alternatives
-      const altContainer = document.getElementById('alternativesContainer');
-      altContainer.innerHTML = rec.alternatives.map(key => {
-        const alt = models[key];
-        return `
-          <div class="alt-card">
-            <div class="alt-info">
-              <div class="alt-name">${alt.name}</div>
-              <div class="alt-reason">${alt.bestFor}</div>
-            </div>
-            <a href="${alt.url}" target="_blank" rel="noopener" class="alt-link">Visit →</a>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function restart() {
-      currentStep = 0;
-      Object.keys(answers).forEach(key => delete answers[key]);
-      
-      document.getElementById('results').classList.remove('active');
-      document.getElementById('landing').classList.add('active');
-    }
+      return result;
+    };
   </script>
 </body>
 </html>
