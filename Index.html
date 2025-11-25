@@ -1,0 +1,3541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>SVPERFVTVRE — Master Layout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-tertiary: #1a1a1a;
+      --text-primary: #e8e8e8;
+      --text-secondary: #888888;
+      --text-muted: #555555;
+      --accent: #c9ff00;
+      --accent-dim: #6b8700;
+      --accent-glow: rgba(201, 255, 0, 0.15);
+      --border: #2a2a2a;
+      --font-primary: 'Outfit', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Spotlight background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 60%;
+      background: radial-gradient(ellipse at center, rgba(201, 255, 0, 0.08) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      padding: 2rem 0;
+    }
+
+    .logo {
+      position: relative;
+      font-family: var(--font-primary);
+      font-size: 1.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .logo .back {
+      color: var(--accent);
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      z-index: 1;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .logo .front {
+      position: relative;
+      z-index: 2;
+      color: var(--text-primary);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .logo:hover .back {
+      top: -4px;
+      left: -4px;
+      opacity: 0.8;
+      text-shadow: 0 0 20px var(--accent);
+    }
+
+    .logo:hover .front {
+      text-shadow: 0 0 8px rgba(232, 232, 232, 0.3);
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 0 4rem;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .headline {
+      font-size: clamp(2.5rem, 7vw, 4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .headline .line1 {
+      display: block;
+      color: var(--text-primary);
+    }
+
+    .headline .line2 {
+      display: block;
+      position: relative;
+    }
+
+    .headline .line2 .back {
+      color: var(--accent);
+      position: absolute;
+      top: -2px;
+      left: 50%;
+      transform: translateX(calc(-50% - 2px));
+      width: 100%;
+      opacity: 0.35;
+    }
+
+    .headline .line2 .front {
+      position: relative;
+      color: var(--accent);
+    }
+
+    .subhead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 700px) {
+      .subhead {
+        white-space: normal;
+      }
+      
+      .subhead .no-orphan {
+        white-space: nowrap;
+      }
+    }
+
+    /* Prompt Section */
+    .prompt-section {
+      max-width: 650px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .prompt-input {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 1.1rem;
+      padding: 1.5rem;
+      resize: none;
+      min-height: 160px;
+      transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      line-height: 1.6;
+    }
+
+    .prompt-input:focus {
+      outline: none;
+      background: var(--bg-tertiary);
+    }
+
+    /* Progress indicator - always highlighted, color evolves */
+    /* Default focused state - white */
+    .prompt-input:focus {
+      border-color: var(--text-primary);
+      box-shadow: 0 0 25px rgba(232, 232, 232, 0.15);
+    }
+
+    /* Level 1: White, pulsing to encourage more input */
+    .input-wrapper.level-1 .prompt-input {
+      border-color: var(--text-primary);
+      animation: pulseWhite 1.5s ease-in-out infinite;
+    }
+
+    .input-wrapper.level-1 .prompt-input:focus {
+      border-color: var(--text-primary);
+    }
+
+    /* Level 2: Yellow, still pulsing but calmer */
+    .input-wrapper.level-2 .prompt-input {
+      border-color: var(--accent);
+      animation: pulseYellow 2s ease-in-out infinite;
+    }
+
+    .input-wrapper.level-2 .prompt-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Level 3: Bright green, steady glow - you made it */
+    .input-wrapper.level-3 .prompt-input {
+      border-color: #50ff50;
+      box-shadow: 0 0 30px rgba(80, 255, 80, 0.25);
+      animation: none;
+    }
+
+    .input-wrapper.level-3 .prompt-input:focus {
+      border-color: #50ff50;
+      box-shadow: 0 0 35px rgba(80, 255, 80, 0.3);
+    }
+
+    @keyframes pulseWhite {
+      0%, 100% { box-shadow: 0 0 10px rgba(232, 232, 232, 0.1); }
+      50% { box-shadow: 0 0 30px rgba(232, 232, 232, 0.25); }
+    }
+
+    @keyframes pulseYellow {
+      0%, 100% { box-shadow: 0 0 15px rgba(201, 255, 0, 0.2); }
+      50% { box-shadow: 0 0 35px rgba(201, 255, 0, 0.4); }
+    }
+
+    .prompt-input::placeholder {
+      color: var(--text-muted);
+      transition: opacity 0.3s ease;
+    }
+
+    .prompt-input:focus::placeholder {
+      opacity: 0.5;
+    }
+
+    /* Action Row */
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .analyze-btn {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      padding: 1.15rem 2.5rem;
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .analyze-btn:hover {
+      background: #d4ff33;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201, 255, 0, 0.2);
+    }
+
+    .analyze-btn:active {
+      transform: translateY(0);
+    }
+
+    .analyze-btn .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .analyze-btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .input-hints {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hint {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hint-icon {
+      opacity: 0.6;
+    }
+
+    /* Quality Indicator */
+    .quality-indicator {
+      transition: all 0.3s ease;
+    }
+
+    .quality-indicator .quality-icon {
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    /* Level 1: White */
+    .quality-indicator.level-1 .quality-icon {
+      color: var(--text-primary);
+    }
+
+    .quality-indicator.level-1 .quality-text {
+      color: var(--text-secondary);
+    }
+
+    /* Level 2: Yellow */
+    .quality-indicator.level-2 .quality-icon {
+      color: var(--accent);
+    }
+
+    .quality-indicator.level-2 .quality-text {
+      color: var(--accent);
+    }
+
+    /* Level 3: Bright green */
+    .quality-indicator.level-3 {
+      color: #50ff50;
+    }
+
+    .quality-indicator.level-3 .quality-icon {
+      color: #50ff50;
+      animation: iconPop 0.4s ease;
+    }
+
+    .quality-indicator.level-3 .quality-text {
+      color: #50ff50;
+    }
+
+    @keyframes iconPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    /* File Upload */
+    .upload-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      min-height: 36px;
+    }
+
+    .upload-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .upload-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 1px dashed var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-btn:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-secondary);
+    }
+
+    .upload-btn .icon {
+      font-size: 1rem;
+    }
+
+    .upload-input {
+      display: none;
+    }
+
+    .file-limits {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Attached File */
+    .attached-file {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    .attached-file.visible {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .attached-file .file-icon {
+      color: var(--accent);
+    }
+
+    .attached-file .file-name {
+      color: var(--text-primary);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .attached-file .file-size {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+
+    .attached-file .remove-file {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      font-size: 1rem;
+      line-height: 1;
+      transition: color 0.2s ease;
+      margin-left: auto;
+    }
+
+    .attached-file .remove-file:hover {
+      color: #ff4444;
+    }
+
+    /* Upload Error */
+    .upload-error {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ff4444;
+      font-size: 0.8rem;
+      animation: shake 0.4s ease;
+    }
+
+    .upload-error.visible {
+      display: flex;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Examples Section */
+    .examples-section {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .examples-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .examples-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .example-chip {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .example-chip:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+    }
+
+    /* Bottom Quiz Link */
+    .bottom-section {
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 300px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-text {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .quiz-prompt {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .quiz-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .quiz-link .arrow {
+      transition: transform 0.2s ease;
+      font-size: 0.8rem;
+    }
+
+    .quiz-link:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* Live Activity Feed */
+    .live-feed {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .live-feed-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #50ff50;
+      border-radius: 50%;
+      animation: livePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .live-feed-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .feed-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 280px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .feed-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--bg-primary));
+      pointer-events: none;
+    }
+
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      animation: feedSlideIn 0.5s ease;
+    }
+
+    @keyframes feedSlideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feed-item-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      padding: 4px;
+      flex-shrink: 0;
+    }
+
+    .feed-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feed-item-prompt {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .feed-item-result {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .feed-item-model {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .feed-item-time {
+      color: var(--text-muted);
+    }
+
+    /* Community Leaderboard */
+    .leaderboard-section {
+      margin-top: 2rem;
+    }
+
+    /* Quiz View */
+    .quiz-view {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: calc(100vh - 100px);
+    }
+
+    .quiz-view.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    body.showing-quiz main {
+      display: none;
+    }
+
+    body.showing-quiz .quiz-view {
+      display: block;
+    }
+
+    .quiz-container {
+      margin-top: 2rem;
+    }
+
+    .quiz-progress {
+      height: 4px;
+      background: var(--bg-tertiary);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-progress-bar {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.4s ease;
+      width: 20%;
+    }
+
+    .quiz-step-indicator {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-question {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--text-muted);
+      background: var(--bg-tertiary);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--accent);
+      background: rgba(201, 255, 0, 0.05);
+    }
+
+    .quiz-option-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .quiz-option-text {
+      flex: 1;
+    }
+
+    .quiz-option-title {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .quiz-option-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* Leaderboard section continued */
+
+    .leaderboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .leaderboard-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .leaderboard-stats {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .leaderboard-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s ease;
+    }
+
+    .leaderboard-item:hover {
+      border-color: var(--text-muted);
+    }
+
+    .leaderboard-rank {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      width: 24px;
+      text-align: center;
+    }
+
+    .leaderboard-rank.top-3 {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .leaderboard-logo {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 4px;
+      background: var(--bg-tertiary);
+      padding: 3px;
+      flex-shrink: 0;
+    }
+
+    .leaderboard-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .leaderboard-prompt {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.2rem;
+    }
+
+    .leaderboard-model {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .leaderboard-votes {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .leaderboard-votes .icon {
+      color: #50ff50;
+    }
+
+    /* Results View */
+    .results-view {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: calc(100vh - 100px);
+    }
+
+    .results-view.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-primary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      margin-bottom: 2rem;
+      transition: color 0.2s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .back-btn .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .back-btn:hover .arrow {
+      transform: translateX(-4px);
+    }
+
+    .results-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Paired recommendation (prompt + result) */
+    .recommendation-pair {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .your-prompt {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      padding: 1.25rem 1.5rem;
+      border-radius: 0;
+    }
+
+    .your-prompt-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .your-prompt-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .pair-connector {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .connector-arrow {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .connector-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .results-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-top: 1px solid var(--accent);
+      padding: 1.75rem;
+    }
+
+    .result-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-model-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .result-logo {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: var(--bg-tertiary);
+      padding: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .result-model-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .results-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .results-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .match-score {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+      background: #50ff50;
+      color: var(--bg-primary);
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .score-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .score-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .result-details {
+      margin-bottom: 1.5rem;
+    }
+
+    .result-reason {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .result-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .result-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .spec {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .spec-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .spec-value {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Result actions row */
+    .result-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .result-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--bg-primary);
+      text-decoration: none;
+      padding: 0.875rem 2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .result-cta:hover {
+      background: #d4ff33;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201, 255, 0, 0.2);
+    }
+
+    .result-cta .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .result-cta:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* Inline feedback */
+    .feedback-inline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feedback-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .feedback-btn-inline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+    }
+
+    .feedback-btn-inline:hover {
+      border-color: var(--text-muted);
+      background: var(--bg-tertiary);
+    }
+
+    .feedback-btn-inline.selected-up {
+      border-color: #50ff50;
+      background: rgba(80, 255, 80, 0.15);
+    }
+
+    .feedback-btn-inline.selected-down {
+      border-color: #ff5050;
+      background: rgba(255, 80, 80, 0.15);
+    }
+
+    .feedback-thanks-inline {
+      display: none;
+      font-size: 0.8rem;
+      color: #50ff50;
+    }
+
+    .feedback-inline.submitted .feedback-btn-inline:not(.selected-up):not(.selected-down) {
+      display: none;
+    }
+
+    .feedback-inline.submitted .feedback-label {
+      display: none;
+    }
+
+    .feedback-inline.submitted .feedback-thanks-inline {
+      display: block;
+    }
+
+    .alternatives-section {
+      margin-top: 0;
+    }
+
+    .alternatives-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .alternatives-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .alt-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    .alt-card:hover {
+      border-color: var(--text-muted);
+      transform: translateY(-2px);
+    }
+
+    .alt-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .alt-card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .alt-card-logo {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      border-radius: 4px;
+      background: var(--bg-tertiary);
+      padding: 3px;
+    }
+
+    .alt-card-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .alt-card-score {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .alt-card-reason {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Hide main when results showing */
+    body.showing-results main {
+      display: none;
+    }
+
+    body.showing-results .results-view {
+      display: block;
+    }
+
+    /* Loading state */
+    .analyze-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .analyze-btn .loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .analyze-btn .loading::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top-color: var(--bg-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.25rem;
+        padding-bottom: env(safe-area-inset-bottom, 1.25rem);
+      }
+
+      header {
+        padding: 1.5rem 0;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+      }
+
+      main {
+        padding: 1rem 0 2rem;
+      }
+
+      .hero-section {
+        margin-bottom: 2rem;
+      }
+
+      .headline {
+        font-size: clamp(1.75rem, 10vw, 2.5rem);
+        margin-bottom: 1rem;
+      }
+
+      .subhead {
+        font-size: 0.95rem;
+      }
+
+      .prompt-input {
+        font-size: 16px; /* Prevents iOS zoom */
+        padding: 1.25rem;
+        min-height: 140px;
+      }
+
+      .action-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .analyze-btn {
+        justify-content: center;
+        padding: 1rem 2rem;
+        min-height: 48px; /* Touch target */
+      }
+
+      .input-hints {
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .upload-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .upload-btn {
+        min-height: 44px; /* Touch target */
+      }
+
+      .file-limits {
+        font-size: 0.65rem;
+      }
+
+      .examples-section {
+        margin-top: 2rem;
+      }
+
+      .examples-row {
+        gap: 0.5rem;
+      }
+
+      .example-chip {
+        padding: 0.65rem 0.9rem;
+        font-size: 0.75rem;
+        min-height: 40px; /* Touch target */
+        display: flex;
+        align-items: center;
+      }
+
+      .bottom-section {
+        margin-top: 3rem;
+      }
+
+      .quiz-link {
+        padding: 0.875rem 1.5rem;
+        min-height: 48px; /* Touch target */
+      }
+
+      footer {
+        padding: 1.5rem 0;
+      }
+
+      /* Results view mobile */
+      .results-view {
+        padding: 1.25rem;
+      }
+
+      .results-title {
+        font-size: 1.5rem;
+      }
+
+      .result-logo {
+        width: 44px;
+        height: 44px;
+        padding: 6px;
+      }
+
+      .result-header-row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .match-score {
+        align-self: flex-start;
+      }
+
+      .result-specs {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .spec {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .spec:last-child {
+        border-bottom: none;
+      }
+
+      .alternatives-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .results-card {
+        padding: 1.25rem;
+      }
+
+      .result-actions {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .result-cta {
+        width: 100%;
+      }
+
+      .feedback-inline {
+        width: 100%;
+        justify-content: center;
+        padding-top: 0.5rem;
+      }
+
+      /* Live feed mobile */
+      .live-feed {
+        margin-top: 3rem;
+        padding-top: 2rem;
+      }
+
+      .feed-item {
+        padding: 0.875rem;
+      }
+
+      .feed-item-logo {
+        width: 28px;
+        height: 28px;
+      }
+
+      .feed-item-prompt {
+        font-size: 0.8rem;
+      }
+
+      /* Leaderboard mobile */
+      .leaderboard-item {
+        padding: 0.875rem;
+      }
+
+      .leaderboard-prompt {
+        font-size: 0.75rem;
+      }
+
+      /* Quiz mobile */
+      .quiz-view {
+        padding: 1.25rem;
+      }
+
+      .quiz-question {
+        font-size: 1.35rem;
+      }
+
+      .quiz-option {
+        padding: 1rem;
+      }
+
+      .quiz-option-icon {
+        font-size: 1.25rem;
+        width: 32px;
+      }
+
+      .quiz-option-title {
+        font-size: 0.95rem;
+      }
+
+      .quiz-option-desc {
+        font-size: 0.8rem;
+      }
+
+      /* Advertise modal mobile */
+      .advertise-modal {
+        padding: 1.5rem;
+        max-height: 90vh;
+      }
+
+      .advertise-stats {
+        flex-direction: row;
+        gap: 0.5rem;
+      }
+
+      .stat-item {
+        padding: 0.75rem 0.5rem;
+      }
+
+      .stat-number {
+        font-size: 1.25rem;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    .footer-divider {
+      margin: 0 0.5rem;
+      opacity: 0.5;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+    }
+
+    /* Advertise Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      max-width: 540px;
+      width: 100%;
+      position: relative;
+    }
+
+    .advertise-modal {
+      padding: 2.5rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .advertise-stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-item {
+      flex: 1;
+      background: var(--bg-tertiary);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .advertise-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      padding: 0.875rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-group select option {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .advertise-submit {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      padding: 1rem 2rem;
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .advertise-submit:hover {
+      filter: brightness(1.1);
+    }
+
+    .advertise-submit .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .advertise-submit:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .modal-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+    }
+
+    /* Form success state */
+    .form-success {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .form-success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-success h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      color: var(--text-secondary);
+    }
+
+    /* Extra small screens */
+    @media (max-width: 380px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .logo {
+        font-size: 1.15rem;
+        letter-spacing: 0.08em;
+      }
+
+      .headline {
+        font-size: 1.5rem;
+      }
+
+      .subhead {
+        font-size: 0.875rem;
+      }
+
+      .prompt-input {
+        padding: 1rem;
+        font-size: 16px; /* Prevents iOS zoom */
+      }
+
+      .analyze-btn {
+        font-size: 0.9rem;
+      }
+
+      .example-chip {
+        font-size: 0.7rem;
+        padding: 0.6rem 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="back">SVPERFVTVRE</span>
+        <span class="front">SVPERFVTVRE</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero-section">
+        <h1 class="headline">
+          <span class="line1">Paste your prompt.</span>
+          <span class="line2">
+            <span class="back">Find your Model.</span>
+            <span class="front">Find your Model.</span>
+          </span>
+        </h1>
+        <p class="subhead">Skip the research. Describe your task and we'll <span class="no-orphan">find the perfect model.</span></p>
+      </div>
+
+      <div class="prompt-section">
+        <div class="input-wrapper">
+          <textarea 
+            class="prompt-input" 
+            id="promptInput"
+            placeholder="Describe what you're trying to accomplish..."
+          ></textarea>
+        </div>
+
+        <div class="upload-row">
+          <div class="upload-left">
+            <label class="upload-btn" id="uploadBtn">
+              <span class="icon">📎</span>
+              <span>Attach file</span>
+              <input type="file" class="upload-input" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.txt,.csv,.json,.md">
+            </label>
+            <div class="attached-file" id="attachedFile">
+              <span class="file-icon">📄</span>
+              <span class="file-name" id="fileName"></span>
+              <span class="file-size" id="fileSize"></span>
+              <button class="remove-file" id="removeFile">×</button>
+            </div>
+            <div class="upload-error" id="uploadError">
+              <span>⚠</span>
+              <span id="errorText"></span>
+            </div>
+          </div>
+          <span class="file-limits">PDF, images, text • Max 10MB</span>
+        </div>
+        
+        <div class="action-row">
+          <button class="analyze-btn">
+            Analyze & Recommend
+            <span class="arrow">→</span>
+          </button>
+          <div class="input-hints">
+            <span class="hint">
+              <span class="hint-icon">⌘</span>
+              <span>Enter to submit</span>
+            </span>
+            <span class="hint quality-indicator" id="qualityIndicator">
+              <span class="quality-icon" id="qualityIcon">○</span>
+              <span class="quality-text" id="qualityText">Be specific</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="examples-section">
+          <div class="examples-label">Try an example</div>
+          <div class="examples-row">
+            <span class="example-chip">Write a marketing email</span>
+            <span class="example-chip">Debug my Python code</span>
+            <span class="example-chip">Summarize this PDF</span>
+            <span class="example-chip">Generate product images</span>
+            <span class="example-chip">Analyze sales data</span>
+            <span class="example-chip">Brainstorm app ideas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-section" id="bottomSection">
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">or</span>
+          <div class="divider-line"></div>
+        </div>
+        <p class="quiz-prompt">Not sure what you need yet?</p>
+        <a class="quiz-link" id="quizLink">
+          Take the guided quiz
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Live Activity Feed -->
+      <div class="live-feed">
+        <div class="live-feed-header">
+          <div class="live-dot"></div>
+          <span class="live-feed-title">Recent matches</span>
+        </div>
+        <div class="feed-container" id="feedContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Results View -->
+    <div class="results-view" id="resultsView">
+      <button class="back-btn" id="backBtn">
+        <span class="arrow">←</span>
+        Try another prompt
+      </button>
+
+      <div class="results-container">
+        <!-- Paired Recommendation Card -->
+        <div class="recommendation-pair">
+          <!-- Your Prompt (top) -->
+          <div class="your-prompt">
+            <span class="your-prompt-label">Your prompt</span>
+            <p class="your-prompt-text" id="yourPromptText"></p>
+          </div>
+
+          <!-- Arrow connector -->
+          <div class="pair-connector">
+            <span class="connector-arrow">↓</span>
+            <span class="connector-text">Best match</span>
+          </div>
+
+          <!-- Main Result -->
+          <div class="results-card">
+            <div class="result-header-row">
+              <div class="result-model-info">
+                <img class="result-logo" id="resultLogo" src="" alt="">
+                <div class="result-model-text">
+                  <h2 class="results-title" id="resultTitle">Claude</h2>
+                  <p class="results-subtitle" id="resultSubtitle">by Anthropic</p>
+                </div>
+              </div>
+              <div class="match-score">
+                <span class="score-value" id="matchScore">94</span>
+                <span class="score-label">% match</span>
+              </div>
+            </div>
+            
+            <div class="result-details">
+              <p class="result-reason" id="resultReason">
+                Claude excels at nuanced writing tasks with specific tone requirements. Its large context window handles complex briefs well.
+              </p>
+              
+              <div class="result-tags" id="resultTags">
+                <span class="tag">Writing</span>
+                <span class="tag">Long-form</span>
+                <span class="tag">Nuanced tone</span>
+              </div>
+
+              <div class="result-specs">
+                <div class="spec">
+                  <span class="spec-label">Pricing</span>
+                  <span class="spec-value" id="specPricing">$20/mo (Pro)</span>
+                </div>
+                <div class="spec">
+                  <span class="spec-label">Context</span>
+                  <span class="spec-value" id="specContext">200K tokens</span>
+                </div>
+                <div class="spec">
+                  <span class="spec-label">Best for</span>
+                  <span class="spec-value" id="specBestFor">Writing, Analysis</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="result-actions">
+              <a class="result-cta" id="resultCta" href="#" target="_blank">
+                Try Claude
+                <span class="arrow">→</span>
+              </a>
+              <div class="feedback-inline" id="feedbackSection">
+                <span class="feedback-label">Helpful?</span>
+                <button class="feedback-btn-inline" id="feedbackUp" title="Yes, helpful">
+                  <span>👍</span>
+                </button>
+                <button class="feedback-btn-inline" id="feedbackDown" title="Not quite">
+                  <span>👎</span>
+                </button>
+                <span class="feedback-thanks-inline" id="feedbackThanks">Thanks!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alternatives-section">
+          <h3 class="alternatives-title">Also consider</h3>
+          <div class="alternatives-grid" id="alternativesGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Community Leaderboard -->
+        <div class="leaderboard-section">
+          <div class="leaderboard-header">
+            <span class="leaderboard-title">Community favorites this week</span>
+            <span class="leaderboard-stats" id="leaderboardStats">2,847 matches</span>
+          </div>
+          <div class="leaderboard-grid" id="leaderboardGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 SVPERFVTVRE
+      <span class="footer-divider">·</span>
+      <a href="#" class="footer-link" id="advertiseLink">Advertise with us</a>
+    </footer>
+
+    <!-- Advertise Modal -->
+    <div class="modal-overlay" id="advertiseModal">
+      <div class="modal-content advertise-modal">
+        <button class="modal-close" id="advertiseClose">×</button>
+        
+        <div class="modal-header">
+          <h2>Advertise with us</h2>
+          <p class="modal-subtitle">Reach thousands of users actively searching for AI tools</p>
+        </div>
+
+        <div class="advertise-stats">
+          <div class="stat-item">
+            <span class="stat-number">10K+</span>
+            <span class="stat-label">Monthly visitors</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">95%</span>
+            <span class="stat-label">Tech audience</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">High</span>
+            <span class="stat-label">Intent users</span>
+          </div>
+        </div>
+
+        <form class="advertise-form" id="advertiseForm" action="https://formsubmit.co/dylanbale@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="SVPERFVTVRE Advertising Inquiry">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="advName">Name</label>
+              <input type="text" id="advName" name="name" required placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label for="advEmail">Email</label>
+              <input type="email" id="advEmail" name="email" required placeholder="you@company.com">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="advCompany">Company / Brand</label>
+              <input type="text" id="advCompany" name="company" required placeholder="Company name">
+            </div>
+            <div class="form-group">
+              <label for="advBudget">Monthly Budget</label>
+              <select id="advBudget" name="budget" required>
+                <option value="" disabled selected>Select range</option>
+                <option value="< $500">Less than $500</option>
+                <option value="$500 - $1,000">$500 - $1,000</option>
+                <option value="$1,000 - $2,500">$1,000 - $2,500</option>
+                <option value="$2,500 - $5,000">$2,500 - $5,000</option>
+                <option value="$5,000+">$5,000+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="advMessage">Message</label>
+            <textarea id="advMessage" name="message" rows="4" placeholder="Tell us about your product and advertising goals..."></textarea>
+          </div>
+
+          <button type="submit" class="advertise-submit">
+            Send Inquiry
+            <span class="arrow">→</span>
+          </button>
+        </form>
+
+        <p class="modal-note">We'll respond within 24 hours</p>
+      </div>
+    </div>
+
+    <!-- Quiz View -->
+    <div class="quiz-view" id="quizView">
+      <button class="back-btn" id="quizBackBtn">
+        <span class="arrow">←</span>
+        Back to home
+      </button>
+
+      <div class="quiz-container">
+        <div class="quiz-progress">
+          <div class="quiz-progress-bar" id="quizProgressBar"></div>
+        </div>
+        <div class="quiz-step-indicator">
+          <span id="quizStepText">Question 1 of 5</span>
+        </div>
+
+        <div class="quiz-question" id="quizQuestion">
+          What's the main thing you want to accomplish?
+        </div>
+
+        <div class="quiz-options" id="quizOptions">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const promptInput = document.getElementById('promptInput');
+    const inputWrapper = document.querySelector('.input-wrapper');
+    const qualityIndicator = document.getElementById('qualityIndicator');
+    const qualityIcon = document.getElementById('qualityIcon');
+    const qualityText = document.getElementById('qualityText');
+
+    // Quality scoring function
+    function calculateQuality(text) {
+      let score = 0;
+      const trimmed = text.trim();
+      
+      if (!trimmed) return { score: 0, level: 0, message: 'Be specific' };
+
+      const charCount = trimmed.length;
+      const wordCount = trimmed.split(/\s+/).filter(w => w.length > 0).length;
+      
+      // Base score from length
+      if (charCount > 20) score += 10;
+      if (charCount > 50) score += 15;
+      if (charCount > 100) score += 15;
+      if (charCount > 150) score += 10;
+
+      // Word count bonus
+      if (wordCount >= 5) score += 10;
+      if (wordCount >= 10) score += 10;
+      if (wordCount >= 15) score += 5;
+
+      // Context indicators (action words, specificity)
+      const actionWords = /\b(write|create|build|analyze|summarize|explain|help|generate|design|develop|debug|review|translate|convert|compare|find|search|make|draft|edit|improve|optimize|brainstorm)\b/i;
+      const hasAction = actionWords.test(trimmed);
+      if (hasAction) score += 10;
+
+      // Output format indicators
+      const formatWords = /\b(code|script|email|report|list|table|json|csv|markdown|html|python|javascript|sql|essay|article|blog|post|summary|outline|app|ideas|data)\b/i;
+      const hasFormat = formatWords.test(trimmed);
+      if (hasFormat) score += 10;
+
+      // Context/domain indicators
+      const contextWords = /\b(for|about|using|with|from|into|based on|regarding|related to|in the style of)\b/i;
+      const hasContext = contextWords.test(trimmed);
+      if (hasContext) score += 5;
+
+      // Specificity bonus (numbers, quotes, specific terms)
+      const hasNumbers = /\d+/.test(trimmed);
+      const hasQuotes = /"[^"]+"|'[^']+'/.test(trimmed);
+      if (hasNumbers) score += 5;
+      if (hasQuotes) score += 5;
+
+      // Determine level and message
+      let level, message, icon;
+      
+      if (score < 25) {
+        level = 1;
+        message = 'Add more detail';
+        icon = '○';
+      } else if (score < 50) {
+        level = 2;
+        message = 'Getting there...';
+        icon = '◐';
+      } else {
+        level = 3;
+        message = 'Ready to analyze';
+        icon = '●';
+      }
+
+      // Cap percentage at 100
+      const percentage = Math.min(score, 100);
+
+      return { score: percentage, level, message, icon };
+    }
+
+    // Update UI based on quality
+    function updateQualityIndicator() {
+      const result = calculateQuality(promptInput.value);
+      
+      // Update indicator class
+      qualityIndicator.className = 'hint quality-indicator';
+      inputWrapper.className = 'input-wrapper';
+      
+      if (result.level > 0) {
+        qualityIndicator.classList.add('level-' + result.level);
+        inputWrapper.classList.add('level-' + result.level);
+      }
+
+      // Update icon and text
+      qualityIcon.textContent = result.icon;
+      qualityText.textContent = result.message;
+    }
+
+    // Listen for input
+    promptInput.addEventListener('input', updateQualityIndicator);
+
+    // Example chip click handlers
+    const exampleChips = document.querySelectorAll('.example-chip');
+    exampleChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const examples = {
+          'Write a marketing email': 'Write a marketing email for a new SaaS product launch targeting small business owners. The tone should be professional but friendly, highlighting time-saving benefits.',
+          'Debug my Python code': 'Debug my Python script that scrapes product data from e-commerce sites. It\'s throwing a timeout error when processing pages with lazy-loaded images.',
+          'Summarize this PDF': 'Summarize a 50-page quarterly earnings report, extracting key financial metrics, YoY comparisons, and forward guidance into a 1-page executive brief.',
+          'Generate product images': 'Generate product photography for a minimalist leather wallet. Style: clean white background, soft shadows, shot from 45-degree angle. For e-commerce listing.',
+          'Analyze sales data': 'Analyze 12 months of sales data to identify seasonal trends, top-performing products, and customer segments. Output as a summary with 3 actionable recommendations.',
+          'Brainstorm app ideas': 'Brainstorm 10 mobile app ideas for busy parents. Focus on time-saving, organization, or family coordination. Include a brief value prop for each.'
+        };
+        
+        promptInput.value = examples[chip.textContent] || chip.textContent;
+        promptInput.focus();
+        updateQualityIndicator();
+      });
+    });
+
+    // Keyboard shortcut (Cmd/Ctrl + Enter to submit)
+    promptInput.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        document.querySelector('.analyze-btn').click();
+      }
+    });
+
+    // File Upload Handling
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const attachedFile = document.getElementById('attachedFile');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const removeFile = document.getElementById('removeFile');
+    const uploadError = document.getElementById('uploadError');
+    const errorText = document.getElementById('errorText');
+
+    // Allowed file types and max size
+    const ALLOWED_TYPES = [
+      'application/pdf',
+      'image/png',
+      'image/jpeg', 
+      'image/gif',
+      'image/webp',
+      'text/plain',
+      'text/csv',
+      'application/json',
+      'text/markdown'
+    ];
+    const ALLOWED_EXTENSIONS = ['.pdf', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.txt', '.csv', '.json', '.md'];
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+
+    // Security: Basic filename sanitization
+    function sanitizeFilename(name) {
+      // Remove path traversal attempts and dangerous characters
+      return name
+        .replace(/[/\\]/g, '')
+        .replace(/\.\./g, '')
+        .replace(/[<>:"|?*]/g, '')
+        .trim();
+    }
+
+    // Format file size
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    // Check file extension
+    function hasValidExtension(filename) {
+      const ext = '.' + filename.split('.').pop().toLowerCase();
+      return ALLOWED_EXTENSIONS.includes(ext);
+    }
+
+    // Show error
+    function showError(message) {
+      errorText.textContent = message;
+      uploadError.classList.add('visible');
+      uploadBtn.style.display = 'flex';
+      attachedFile.classList.remove('visible');
+      
+      // Auto-hide after 4 seconds
+      setTimeout(() => {
+        uploadError.classList.remove('visible');
+      }, 4000);
+    }
+
+    // Handle file selection
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      uploadError.classList.remove('visible');
+      
+      if (!file) return;
+
+      // Security checks
+      const sanitizedName = sanitizeFilename(file.name);
+      
+      // Check file extension
+      if (!hasValidExtension(sanitizedName)) {
+        showError('File type not supported');
+        fileInput.value = '';
+        return;
+      }
+
+      // Check MIME type (can be spoofed but adds a layer)
+      if (!ALLOWED_TYPES.includes(file.type) && file.type !== '') {
+        showError('File type not supported');
+        fileInput.value = '';
+        return;
+      }
+
+      // Check file size
+      if (file.size > MAX_SIZE) {
+        showError('File too large (max 10MB)');
+        fileInput.value = '';
+        return;
+      }
+
+      // Check for suspicious patterns in filename
+      if (/\.(exe|bat|cmd|sh|php|js|jar|msi|dll)$/i.test(sanitizedName)) {
+        showError('File type not allowed');
+        fileInput.value = '';
+        return;
+      }
+
+      // Success - show attached file
+      fileName.textContent = sanitizedName;
+      fileSize.textContent = formatFileSize(file.size);
+      attachedFile.classList.add('visible');
+      uploadBtn.style.display = 'none';
+
+      // Update quality indicator (having a file adds context)
+      updateQualityIndicator();
+    });
+
+    // Remove file
+    removeFile.addEventListener('click', () => {
+      fileInput.value = '';
+      attachedFile.classList.remove('visible');
+      uploadBtn.style.display = 'flex';
+      updateQualityIndicator();
+    });
+
+    // Update quality calculation to account for attached files
+    const originalCalculateQuality = calculateQuality;
+    calculateQuality = function(text) {
+      const result = originalCalculateQuality(text);
+      
+      // Bonus for having a file attached
+      if (fileInput.files && fileInput.files[0]) {
+        result.score = Math.min(result.score + 15, 100);
+        
+        // Recalculate level based on new score
+        if (result.score >= 50) {
+          result.level = 3;
+          result.message = 'Ready to analyze';
+          result.icon = '●';
+        } else if (result.score >= 25) {
+          result.level = 2;
+          result.message = 'Getting there...';
+          result.icon = '◐';
+        }
+      }
+      
+      return result;
+    };
+
+    // ===========================================
+    // AI MODELS DATABASE
+    // ===========================================
+    const AI_MODELS = {
+      claude: {
+        name: 'Claude',
+        version: '3.5 Sonnet',
+        company: 'Anthropic',
+        logo: 'https://www.anthropic.com/images/icons/apple-touch-icon.png',
+        url: 'https://claude.ai',
+        pricing: '$20/mo (Pro)',
+        context: '200K tokens',
+        bestFor: 'Writing, Analysis, Code',
+        description: 'Excels at nuanced writing, long-form content, and tasks requiring careful reasoning. Known for following complex instructions accurately.',
+        tags: ['Writing', 'Analysis', 'Long-form', 'Coding', 'Research']
+      },
+      chatgpt: {
+        name: 'ChatGPT',
+        version: 'GPT-4o',
+        company: 'OpenAI',
+        logo: 'https://cdn.oaistatic.com/assets/apple-touch-icon-mz9nytnj.webp',
+        url: 'https://chat.openai.com',
+        pricing: '$20/mo (Plus)',
+        context: '128K tokens',
+        bestFor: 'General, Coding, Chat',
+        description: 'Versatile general-purpose assistant with strong coding abilities and fast response times. Great for quick tasks and conversations.',
+        tags: ['General', 'Coding', 'Fast', 'Versatile', 'Chat']
+      },
+      gemini: {
+        name: 'Gemini',
+        version: '1.5 Pro',
+        company: 'Google',
+        logo: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        url: 'https://gemini.google.com',
+        pricing: 'Free / $20/mo',
+        context: '1M tokens',
+        bestFor: 'Research, Multimodal',
+        description: 'Massive context window perfect for analyzing large documents. Strong integration with Google services and multimodal capabilities.',
+        tags: ['Research', 'Large docs', 'Free tier', 'Multimodal']
+      },
+      perplexity: {
+        name: 'Perplexity',
+        version: 'Pro',
+        company: 'Perplexity AI',
+        logo: 'https://www.perplexity.ai/favicon.svg',
+        url: 'https://perplexity.ai',
+        pricing: 'Free / $20/mo',
+        context: 'Web-connected',
+        bestFor: 'Research, Current events',
+        description: 'Real-time web search with AI synthesis. Best for research, fact-checking, and questions about current events.',
+        tags: ['Research', 'Web search', 'Citations', 'Current']
+      },
+      cursor: {
+        name: 'Cursor',
+        version: 'Pro',
+        company: 'Cursor',
+        logo: 'https://www.cursor.com/apple-touch-icon.png',
+        url: 'https://cursor.com',
+        pricing: '$20/mo (Pro)',
+        context: 'Codebase-aware',
+        bestFor: 'Coding, Development',
+        description: 'AI-powered code editor that understands your entire codebase. Best for serious software development and debugging.',
+        tags: ['Coding', 'IDE', 'Debugging', 'Development']
+      },
+      copilot: {
+        name: 'GitHub Copilot',
+        version: 'Enterprise',
+        company: 'GitHub/Microsoft',
+        logo: 'https://github.githubassets.com/favicons/favicon.svg',
+        url: 'https://github.com/features/copilot',
+        pricing: '$10/mo',
+        context: 'Code-focused',
+        bestFor: 'Code completion',
+        description: 'Inline code suggestions as you type. Integrates directly into VS Code and other IDEs for seamless coding assistance.',
+        tags: ['Coding', 'Autocomplete', 'IDE', 'GitHub']
+      },
+      midjourney: {
+        name: 'Midjourney',
+        version: 'v6.1',
+        company: 'Midjourney',
+        logo: 'https://www.midjourney.com/apple-icon.png',
+        url: 'https://midjourney.com',
+        pricing: '$10-60/mo',
+        context: 'Image generation',
+        bestFor: 'Art, Visuals',
+        description: 'Industry-leading AI image generation with stunning artistic quality. Best for creative visuals, concept art, and marketing imagery.',
+        tags: ['Images', 'Art', 'Creative', 'Visual']
+      },
+      dalle: {
+        name: 'DALL-E',
+        version: '3',
+        company: 'OpenAI',
+        logo: 'https://cdn.oaistatic.com/assets/apple-touch-icon-mz9nytnj.webp',
+        url: 'https://chat.openai.com',
+        pricing: 'Included in Plus',
+        context: 'Image generation',
+        bestFor: 'Images, Editing',
+        description: 'Excellent at following detailed prompts and generating consistent imagery. Integrated into ChatGPT for conversational image creation.',
+        tags: ['Images', 'Editing', 'Integrated', 'Precise']
+      },
+      ollama: {
+        name: 'Ollama',
+        version: 'Llama 3.1',
+        company: 'Ollama',
+        logo: 'https://ollama.com/public/ollama.png',
+        url: 'https://ollama.ai',
+        pricing: 'Free (local)',
+        context: 'Varies by model',
+        bestFor: 'Privacy, Offline',
+        description: 'Run AI models locally on your machine. Best for privacy-sensitive work, offline use, or when you need full control over your data.',
+        tags: ['Local', 'Private', 'Free', 'Offline']
+      },
+      grok: {
+        name: 'Grok',
+        version: '2',
+        company: 'xAI',
+        logo: 'https://x.ai/favicon.ico',
+        url: 'https://x.com/i/grok',
+        pricing: 'X Premium',
+        context: 'Real-time X data',
+        bestFor: 'Social, Trends',
+        description: 'Real-time access to X (Twitter) data and trends. Best for social media analysis and understanding current conversations.',
+        tags: ['Social', 'Twitter/X', 'Trends', 'Real-time']
+      }
+    };
+
+    // ===========================================
+    // INTELLIGENT SCORING SYSTEM
+    // ===========================================
+    
+    // Weighted keywords: higher weight = stronger signal
+    const MODEL_SIGNALS = {
+      claude: {
+        primary: ['essay', 'report', 'analysis', 'nuanced', 'long-form', 'professional', 'document', 'draft', 'thoughtful', 'careful', 'complex instructions'],
+        secondary: ['writ', 'summar', 'explain', 'email', 'article', 'content', 'review', 'edit', 'proofread', 'refine', 'rewrite', 'blog', 'letter', 'memo', 'proposal'],
+        tertiary: ['help', 'analyz', 'research', 'understand', 'think', 'reason', 'creative'],
+        phrases: ['write me', 'draft a', 'help me write', 'review my', 'edit this', 'improve my', 'professional tone', 'formal email', 'long document', 'detailed analysis']
+      },
+      chatgpt: {
+        primary: ['quick', 'fast', 'general', 'chat', 'conversation', 'brainstorm', 'ideas'],
+        secondary: ['explain', 'help', 'simple', 'basic', 'easy', 'casual', 'list', 'suggest'],
+        tertiary: ['code', 'script', 'program'],
+        phrases: ['can you', 'what is', 'how do', 'tell me', 'give me', 'quick question', 'just need']
+      },
+      gemini: {
+        primary: ['youtube', 'video', 'google', 'large document', 'long pdf', 'entire book', 'massive', 'million tokens'],
+        secondary: ['multimodal', 'pdf', 'document', 'research', 'free', 'analyze video'],
+        tertiary: ['image', 'search', 'file'],
+        phrases: ['analyze this video', 'entire document', 'whole book', 'long file', 'youtube video', 'google doc', 'large pdf', 'hundreds of pages']
+      },
+      perplexity: {
+        primary: ['current', 'recent', 'latest', 'news', 'today', '2024', '2025', 'citation', 'source', 'fact check', 'verify'],
+        secondary: ['search', 'find', 'lookup', 'research', 'happening', 'update', 'real-time'],
+        tertiary: ['who is', 'what is', 'when did', 'where is'],
+        phrases: ['what happened', 'latest news', 'recent events', 'fact check', 'find sources', 'cite sources', 'with citations', 'current status', 'up to date', 'happening now', 'this week', 'this month']
+      },
+      cursor: {
+        primary: ['codebase', 'project', 'repository', 'debug', 'refactor', 'entire codebase', 'multiple files'],
+        secondary: ['code', 'coding', 'programming', 'developer', 'software', 'bug', 'error', 'fix', 'build', 'develop'],
+        tertiary: ['python', 'javascript', 'typescript', 'react', 'api', 'function', 'class'],
+        phrases: ['fix this bug', 'debug my', 'refactor this', 'entire project', 'across files', 'whole codebase', 'build a', 'develop a', 'create an app', 'full stack']
+      },
+      copilot: {
+        primary: ['autocomplete', 'code completion', 'inline', 'suggestion', 'vscode', 'ide'],
+        secondary: ['code', 'function', 'method', 'snippet', 'boilerplate'],
+        tertiary: ['programming', 'typing', 'write code'],
+        phrases: ['as i type', 'code suggestions', 'in my editor', 'inline help', 'complete this', 'finish this function']
+      },
+      midjourney: {
+        primary: ['art', 'artistic', 'artwork', 'illustration', 'concept art', 'portrait', 'landscape', 'aesthetic', 'stylized', 'beautiful'],
+        secondary: ['image', 'picture', 'visual', 'render', 'poster', 'graphic', 'scene', 'fantasy', 'realistic'],
+        tertiary: ['create', 'generate', 'design'],
+        phrases: ['generate an image', 'create art', 'make a picture', 'visualize', 'concept art of', 'illustration of', 'artistic style', 'in the style of', 'photorealistic', 'digital art']
+      },
+      dalle: {
+        primary: ['edit image', 'modify image', 'image editing', 'product photo', 'mockup', 'precise', 'accurate'],
+        secondary: ['image', 'picture', 'photo', 'icon', 'logo', 'simple'],
+        tertiary: ['generate', 'create', 'visual'],
+        phrases: ['edit this image', 'modify the', 'change the background', 'remove from image', 'add to image', 'product shot', 'clean mockup', 'simple icon']
+      },
+      ollama: {
+        primary: ['private', 'privacy', 'local', 'offline', 'confidential', 'sensitive', 'secure', 'self-hosted', 'air-gapped'],
+        secondary: ['free', 'own computer', 'machine', 'control', 'data'],
+        tertiary: ['run', 'host'],
+        phrases: ['run locally', 'on my machine', 'keep private', 'sensitive data', 'confidential information', 'without internet', 'offline use', 'data privacy', 'self host', 'own server', 'no cloud']
+      },
+      grok: {
+        primary: ['twitter', 'x.com', 'tweet', 'elon', 'trending', 'viral'],
+        secondary: ['social media', 'social', 'trend', 'post', 'hashtag'],
+        tertiary: ['meme', 'online'],
+        phrases: ['on twitter', 'on x', 'twitter trend', 'viral tweet', 'social media trend', 'what people are saying', 'public opinion', 'twitter discourse']
+      }
+    };
+
+    // Intent patterns for different task types
+    const INTENT_PATTERNS = {
+      imageGeneration: {
+        pattern: /\b(generate|create|make|design|draw|render|visualize)\b.{0,20}\b(image|picture|photo|art|visual|illustration|artwork|portrait|scene|graphic)\b|\b(image|picture|photo|art|visual)\b.{0,20}\b(of|showing|depicting|with)\b/i,
+        boost: { midjourney: 40, dalle: 35 },
+        suppress: { cursor: -20, copilot: -20, perplexity: -15 }
+      },
+      imageEditing: {
+        pattern: /\b(edit|modify|change|remove|add to|fix|adjust|crop|enhance)\b.{0,15}\b(image|picture|photo|background)\b/i,
+        boost: { dalle: 45, midjourney: 20 },
+        suppress: { cursor: -20, perplexity: -20 }
+      },
+      coding: {
+        pattern: /\b(code|coding|program|debug|function|class|api|bug|error|script|developer|software|build|app|application|website|backend|frontend|database)\b/i,
+        boost: { cursor: 30, copilot: 25, chatgpt: 15, claude: 10 },
+        suppress: { midjourney: -25, dalle: -25, grok: -15 }
+      },
+      codebaseWork: {
+        pattern: /\b(codebase|repository|repo|project|multiple files|refactor|entire|whole)\b.{0,20}\b(code|project|app|application)\b|\b(across|all)\b.{0,10}\b(files|modules|components)\b/i,
+        boost: { cursor: 45, copilot: 15 },
+        suppress: { chatgpt: -10 }
+      },
+      writing: {
+        pattern: /\b(write|draft|compose|author|create)\b.{0,15}\b(email|essay|article|blog|report|document|letter|memo|proposal|content|copy|post|story)\b|\b(professional|formal|business)\b.{0,15}\b(writing|tone|email|letter)\b/i,
+        boost: { claude: 35, chatgpt: 15 },
+        suppress: { midjourney: -20, dalle: -20, cursor: -15 }
+      },
+      analysis: {
+        pattern: /\b(analyze|analysis|examine|evaluate|assess|review|compare|contrast|break down|deep dive)\b/i,
+        boost: { claude: 30, gemini: 20 },
+        suppress: { midjourney: -15, dalle: -15 }
+      },
+      research: {
+        pattern: /\b(research|find|search|lookup|discover|source|citation|cite|reference|verify|fact.?check)\b/i,
+        boost: { perplexity: 35, gemini: 15 },
+        suppress: { midjourney: -20, dalle: -20, ollama: -10 }
+      },
+      currentEvents: {
+        pattern: /\b(current|recent|latest|today|this week|this month|happening|news|2024|2025|update|now)\b/i,
+        boost: { perplexity: 40, grok: 20 },
+        suppress: { ollama: -15 }
+      },
+      privacy: {
+        pattern: /\b(private|privacy|confidential|sensitive|secure|secret|personal|offline|local|air.?gap)\b/i,
+        boost: { ollama: 50 },
+        suppress: { perplexity: -20, grok: -20 }
+      },
+      socialMedia: {
+        pattern: /\b(twitter|x\.com|tweet|social media|trending|viral|hashtag|influencer|followers)\b/i,
+        boost: { grok: 45 },
+        suppress: { cursor: -15, copilot: -15 }
+      },
+      largeDocument: {
+        pattern: /\b(large|long|entire|whole|full|huge|massive|complete)\b.{0,15}\b(document|pdf|file|book|paper|transcript|codebase)\b|\b(hundreds|thousands)\b.{0,10}\b(pages|lines)\b/i,
+        boost: { gemini: 40, claude: 20 },
+        suppress: {}
+      },
+      video: {
+        pattern: /\b(youtube|video|watch|clip|footage|movie|film)\b/i,
+        boost: { gemini: 35 },
+        suppress: { cursor: -10, copilot: -10 }
+      },
+      quickQuestion: {
+        pattern: /^(what|who|when|where|why|how|is|are|can|do|does|did|will|would|should)\b.{5,50}\??$/i,
+        boost: { chatgpt: 20, perplexity: 15 },
+        suppress: {}
+      }
+    };
+
+    // Simple stemming - matches word roots
+    function matchesKeyword(text, keyword) {
+      // Escape special regex chars but allow partial matching
+      const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`\\b${escaped}`, 'i');
+      return pattern.test(text);
+    }
+
+    // Check for phrase matches
+    function countPhraseMatches(text, phrases) {
+      let count = 0;
+      for (const phrase of phrases) {
+        if (text.includes(phrase.toLowerCase())) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    // ===========================================
+    // RECOMMENDATION ENGINE
+    // ===========================================
+    function analyzePrompt(promptText) {
+      const text = promptText.toLowerCase();
+      const scores = {};
+      const hasFile = fileInput.files && fileInput.files[0];
+      const fileType = hasFile ? fileInput.files[0].type : '';
+      const fileName = hasFile ? fileInput.files[0].name.toLowerCase() : '';
+      
+      // Initialize scores
+      for (const modelId of Object.keys(AI_MODELS)) {
+        scores[modelId] = { score: 0, matchedSignals: [], reasons: [] };
+      }
+      
+      // 1. WEIGHTED KEYWORD MATCHING
+      for (const [modelId, signals] of Object.entries(MODEL_SIGNALS)) {
+        // Primary keywords: +15 points each
+        for (const keyword of signals.primary) {
+          if (matchesKeyword(text, keyword)) {
+            scores[modelId].score += 15;
+            scores[modelId].matchedSignals.push(keyword);
+          }
+        }
+        
+        // Secondary keywords: +8 points each
+        for (const keyword of signals.secondary) {
+          if (matchesKeyword(text, keyword)) {
+            scores[modelId].score += 8;
+            scores[modelId].matchedSignals.push(keyword);
+          }
+        }
+        
+        // Tertiary keywords: +3 points each
+        for (const keyword of signals.tertiary) {
+          if (matchesKeyword(text, keyword)) {
+            scores[modelId].score += 3;
+            scores[modelId].matchedSignals.push(keyword);
+          }
+        }
+        
+        // Phrase matches: +20 points each (strong signal)
+        const phraseMatches = countPhraseMatches(text, signals.phrases);
+        if (phraseMatches > 0) {
+          scores[modelId].score += phraseMatches * 20;
+          scores[modelId].reasons.push(`${phraseMatches} phrase match${phraseMatches > 1 ? 'es' : ''}`);
+        }
+      }
+      
+      // 2. INTENT PATTERN MATCHING
+      for (const [intentName, intent] of Object.entries(INTENT_PATTERNS)) {
+        if (intent.pattern.test(text)) {
+          // Apply boosts
+          for (const [modelId, boost] of Object.entries(intent.boost)) {
+            scores[modelId].score += boost;
+            scores[modelId].reasons.push(intentName);
+          }
+          // Apply suppressions
+          for (const [modelId, suppress] of Object.entries(intent.suppress)) {
+            scores[modelId].score += suppress; // suppress is negative
+          }
+        }
+      }
+      
+      // 3. FILE TYPE BONUSES
+      if (hasFile) {
+        if (fileType.includes('image') || /\.(jpg|jpeg|png|gif|webp|svg)$/.test(fileName)) {
+          scores.midjourney.score += 20;
+          scores.dalle.score += 25; // DALL-E better for editing existing images
+          scores.gemini.score += 10;
+          scores.claude.score += 10;
+          scores.chatgpt.score += 10;
+        }
+        if (fileType.includes('pdf') || fileName.endsWith('.pdf')) {
+          scores.gemini.score += 25; // Large context
+          scores.claude.score += 20;
+          scores.chatgpt.score += 10;
+        }
+        if (fileType.includes('video') || /\.(mp4|mov|avi|webm)$/.test(fileName)) {
+          scores.gemini.score += 35; // Best for video
+        }
+        if (/\.(js|ts|py|java|cpp|c|go|rs|rb|php|swift|kt)$/.test(fileName)) {
+          scores.cursor.score += 30;
+          scores.copilot.score += 20;
+          scores.claude.score += 15;
+          scores.chatgpt.score += 15;
+        }
+        if (/\.(json|csv|xml|yaml|yml)$/.test(fileName)) {
+          scores.claude.score += 15;
+          scores.chatgpt.score += 15;
+        }
+        if (/\.(doc|docx|txt|md)$/.test(fileName)) {
+          scores.claude.score += 20;
+          scores.chatgpt.score += 15;
+        }
+      }
+      
+      // 4. PROMPT LENGTH/COMPLEXITY ADJUSTMENTS
+      const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+      if (wordCount > 50) {
+        // Longer, more complex prompts favor Claude
+        scores.claude.score += 15;
+        scores.gemini.score += 10;
+      } else if (wordCount < 10) {
+        // Short, simple prompts favor ChatGPT
+        scores.chatgpt.score += 10;
+      }
+      
+      // 5. ENSURE MINIMUM DIFFERENTIATION
+      // If prompt is very generic, give slight edge to versatile models
+      const totalScore = Object.values(scores).reduce((sum, s) => sum + Math.max(0, s.score), 0);
+      if (totalScore < 20) {
+        scores.chatgpt.score += 15;
+        scores.claude.score += 10;
+      }
+      
+      // Sort by score
+      const ranked = Object.entries(scores)
+        .map(([id, data]) => ({
+          id,
+          ...AI_MODELS[id],
+          score: data.score,
+          matchedSignals: data.matchedSignals,
+          reasons: data.reasons
+        }))
+        .sort((a, b) => b.score - a.score);
+      
+      // Normalize scores for display with better differentiation
+      const maxScore = Math.max(ranked[0].score, 1);
+      const secondScore = ranked[1] ? ranked[1].score : 0;
+      
+      ranked.forEach((model, index) => {
+        if (model.score <= 0) {
+          // No matches or negative - show low score
+          model.displayScore = 42 - (index * 2);
+        } else if (index === 0) {
+          // Top match - check how dominant
+          if (maxScore > secondScore * 1.5) {
+            model.displayScore = 96; // Clear winner
+          } else {
+            model.displayScore = 92; // Close race
+          }
+        } else {
+          // Scale based on ratio to max score
+          const ratio = model.score / maxScore;
+          if (ratio > 0.8) {
+            model.displayScore = Math.round(82 + (ratio * 10)); // Close competitor: 82-92
+          } else if (ratio > 0.5) {
+            model.displayScore = Math.round(60 + (ratio * 30)); // Good option: 60-75
+          } else if (ratio > 0.2) {
+            model.displayScore = Math.round(48 + (ratio * 40)); // Possible: 48-56
+          } else {
+            model.displayScore = Math.round(40 + (ratio * 30)); // Low match: 40-46
+          }
+        }
+        // Ensure minimum of 38 and slight decrement by position
+        model.displayScore = Math.max(38, model.displayScore - (index * 1));
+      });
+      
+      return ranked;
+    }
+
+    function generateReason(model, prompt) {
+      const text = prompt.toLowerCase();
+      
+      // Check for matched signals to provide more specific reasons
+      const signals = model.matchedSignals || [];
+      const reasons = model.reasons || [];
+      
+      // Image generation
+      if (model.id === 'midjourney') {
+        if (reasons.includes('imageGeneration')) {
+          return `Midjourney is the industry leader for artistic image generation. Its ${model.version} produces stunning, creative visuals with exceptional style control.`;
+        }
+        return `${model.name} excels at generating high-quality artistic visuals with a distinctive aesthetic that's hard to match.`;
+      }
+      
+      if (model.id === 'dalle') {
+        if (reasons.includes('imageEditing')) {
+          return `DALL-E 3 is excellent at editing and modifying existing images with precise control over changes.`;
+        }
+        return `${model.name} produces accurate, detailed images and integrates seamlessly with ChatGPT for iterative refinement.`;
+      }
+      
+      // Coding
+      if (model.id === 'cursor') {
+        if (reasons.includes('codebaseWork')) {
+          return `Cursor understands your entire codebase context, making it ideal for refactoring and cross-file changes.`;
+        }
+        return `${model.name} is purpose-built for serious development work with full codebase awareness and intelligent debugging.`;
+      }
+      
+      if (model.id === 'copilot') {
+        return `GitHub Copilot provides real-time code suggestions as you type, trained on billions of lines of public code.`;
+      }
+      
+      // Research
+      if (model.id === 'perplexity') {
+        if (reasons.includes('currentEvents')) {
+          return `Perplexity has real-time web access, perfect for finding the latest information with cited sources.`;
+        }
+        return `${model.name} combines AI with live web search, providing sourced answers for research and fact-checking.`;
+      }
+      
+      // Privacy
+      if (model.id === 'ollama') {
+        return `Ollama runs entirely on your local machine—your data never leaves your computer, ensuring complete privacy.`;
+      }
+      
+      // Large documents
+      if (model.id === 'gemini') {
+        if (reasons.includes('largeDocument') || reasons.includes('video')) {
+          return `Gemini's 1M token context window can process entire books, long videos, or massive codebases in a single prompt.`;
+        }
+        return `${model.name}'s massive context window and multimodal abilities make it great for complex, multi-format tasks.`;
+      }
+      
+      // Social
+      if (model.id === 'grok') {
+        return `Grok has real-time access to X (Twitter) data, making it uniquely suited for understanding social trends and discussions.`;
+      }
+      
+      // Writing
+      if (model.id === 'claude') {
+        if (reasons.includes('writing') || reasons.includes('analysis')) {
+          return `Claude excels at nuanced writing and careful analysis, following complex instructions with precision.`;
+        }
+        return `${model.name} is known for thoughtful, well-reasoned responses and strong performance across writing, analysis, and coding.`;
+      }
+      
+      // General
+      if (model.id === 'chatgpt') {
+        if (signals.length < 3) {
+          return `ChatGPT is a versatile all-rounder that handles most tasks well with fast, reliable responses.`;
+        }
+        return `${model.name} offers strong general capabilities with quick response times and broad knowledge.`;
+      }
+      
+      return `${model.name} is well-suited for this type of task based on its core capabilities.`;
+    }
+
+    // ===========================================
+    // RESULTS VIEW
+    // ===========================================
+    const resultsView = document.getElementById('resultsView');
+    const backBtn = document.getElementById('backBtn');
+    const analyzeBtn = document.querySelector('.analyze-btn');
+
+    function showResults(recommendations) {
+      const top = recommendations[0];
+      const alternatives = recommendations.slice(1, 3);
+      
+      // Populate main result
+      const resultLogo = document.getElementById('resultLogo');
+      resultLogo.src = top.logo;
+      resultLogo.alt = top.name + ' logo';
+      resultLogo.onerror = function() { this.style.display = 'none'; };
+      resultLogo.style.display = 'block';
+      
+      document.getElementById('resultTitle').textContent = `${top.name} ${top.version}`;
+      document.getElementById('resultSubtitle').textContent = `by ${top.company}`;
+      document.getElementById('matchScore').textContent = top.displayScore;
+      document.getElementById('resultReason').textContent = generateReason(top, promptInput.value);
+      document.getElementById('specPricing').textContent = top.pricing;
+      document.getElementById('specContext').textContent = top.context;
+      document.getElementById('specBestFor').textContent = top.bestFor;
+      document.getElementById('resultCta').href = top.url;
+      document.getElementById('resultCta').innerHTML = `Try ${top.name} <span class="arrow">→</span>`;
+      
+      // Populate tags
+      const tagsContainer = document.getElementById('resultTags');
+      tagsContainer.innerHTML = top.tags.slice(0, 4).map(tag => `<span class="tag">${tag}</span>`).join('');
+      
+      // Populate alternatives with logos
+      const altGrid = document.getElementById('alternativesGrid');
+      altGrid.innerHTML = alternatives.map(alt => `
+        <a class="alt-card" href="${alt.url}" target="_blank">
+          <div class="alt-card-header">
+            <div class="alt-card-title">
+              <img class="alt-card-logo" src="${alt.logo}" alt="${alt.name} logo" onerror="this.style.display='none'">
+              <span class="alt-card-name">${alt.name} ${alt.version}</span>
+            </div>
+            <span class="alt-card-score">${alt.displayScore}%</span>
+          </div>
+          <p class="alt-card-reason">${alt.description.split('.')[0]}.</p>
+        </a>
+      `).join('');
+      
+      // Show user's prompt
+      document.getElementById('yourPromptText').textContent = promptInput.value.length > 200 
+        ? promptInput.value.substring(0, 200) + '...' 
+        : promptInput.value;
+      
+      // Show results view
+      document.body.classList.add('showing-results');
+      resultsView.classList.add('active');
+      resetFeedback();
+      window.scrollTo(0, 0);
+    }
+
+    function hideResults() {
+      document.body.classList.remove('showing-results');
+      resultsView.classList.remove('active');
+    }
+
+    // Analyze button click
+    analyzeBtn.addEventListener('click', () => {
+      const prompt = promptInput.value.trim();
+      
+      if (!prompt) {
+        promptInput.focus();
+        return;
+      }
+      
+      // Add loading state
+      analyzeBtn.innerHTML = '<span class="loading">Analyzing...</span>';
+      analyzeBtn.disabled = true;
+      
+      // Simulate brief analysis time for UX
+      setTimeout(() => {
+        const recommendations = analyzePrompt(prompt);
+        showResults(recommendations);
+        
+        // Reset button
+        analyzeBtn.innerHTML = 'Analyze & Recommend <span class="arrow">→</span>';
+        analyzeBtn.disabled = false;
+      }, 600);
+    });
+
+    // Back button click
+    backBtn.addEventListener('click', hideResults);
+
+    // ===========================================
+    // LIVE ACTIVITY FEED
+    // ===========================================
+    const SAMPLE_QUERIES = [
+      { prompt: "Write a technical blog post about microservices architecture", model: "claude", time: "2m ago" },
+      { prompt: "Debug this React useEffect infinite loop", model: "cursor", time: "3m ago" },
+      { prompt: "What are the latest AI regulations in the EU?", model: "perplexity", time: "5m ago" },
+      { prompt: "Generate a hero image for a fintech landing page", model: "midjourney", time: "6m ago" },
+      { prompt: "Summarize this 200-page legal contract", model: "gemini", time: "8m ago" },
+      { prompt: "Help me brainstorm viral TikTok content ideas", model: "chatgpt", time: "9m ago" },
+      { prompt: "Create product mockups for a new sneaker line", model: "midjourney", time: "11m ago" },
+      { prompt: "Analyze my company's Q3 sales data trends", model: "claude", time: "12m ago" },
+      { prompt: "Fix this Python async/await race condition", model: "cursor", time: "14m ago" },
+      { prompt: "What's trending on X about the Fed announcement?", model: "grok", time: "15m ago" },
+      { prompt: "Process this customer feedback data locally", model: "ollama", time: "17m ago" },
+      { prompt: "Draft a cold outreach email for B2B SaaS", model: "claude", time: "18m ago" },
+      { prompt: "Build a REST API boilerplate in Node.js", model: "chatgpt", time: "20m ago" },
+      { prompt: "Research competitors in the AI writing space", model: "perplexity", time: "22m ago" },
+      { prompt: "Generate variations of our logo in different styles", model: "dalle", time: "24m ago" },
+    ];
+
+    const feedContainer = document.getElementById('feedContainer');
+    let feedItems = [...SAMPLE_QUERIES];
+    let feedIndex = 0;
+
+    function renderFeedItem(item) {
+      const model = AI_MODELS[item.model];
+      return `
+        <div class="feed-item">
+          <img class="feed-item-logo" src="${model.logo}" alt="${model.name}" onerror="this.style.display='none'">
+          <div class="feed-item-content">
+            <p class="feed-item-prompt">"${item.prompt}"</p>
+            <div class="feed-item-result">
+              <span class="feed-item-model">→ ${model.name} ${model.version}</span>
+              <span class="feed-item-time">${item.time}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function initFeed() {
+      // Show first 4 items
+      const initialItems = feedItems.slice(0, 4);
+      feedContainer.innerHTML = initialItems.map(renderFeedItem).join('');
+    }
+
+    function addNewFeedItem() {
+      // Rotate through sample queries with randomized times
+      feedIndex = (feedIndex + 1) % SAMPLE_QUERIES.length;
+      const newItem = { 
+        ...SAMPLE_QUERIES[feedIndex], 
+        time: 'just now'
+      };
+      
+      // Create new element
+      const newEl = document.createElement('div');
+      newEl.innerHTML = renderFeedItem(newItem);
+      const newFeedItem = newEl.firstElementChild;
+      
+      // Insert at top
+      feedContainer.insertBefore(newFeedItem, feedContainer.firstChild);
+      
+      // Remove last item if too many
+      if (feedContainer.children.length > 5) {
+        feedContainer.removeChild(feedContainer.lastChild);
+      }
+      
+      // Update times on existing items
+      const items = feedContainer.querySelectorAll('.feed-item-time');
+      items.forEach((el, i) => {
+        if (i === 0) return;
+        const mins = i * 2 + Math.floor(Math.random() * 2);
+        el.textContent = `${mins}m ago`;
+      });
+    }
+
+    // Initialize feed
+    initFeed();
+
+    // Add new items periodically (every 8-15 seconds for realism)
+    setInterval(() => {
+      addNewFeedItem();
+    }, 8000 + Math.random() * 7000);
+
+    // ===========================================
+    // FEEDBACK HANDLING
+    // ===========================================
+    const feedbackInline = document.getElementById('feedbackSection');
+    const feedbackUp = document.getElementById('feedbackUp');
+    const feedbackDown = document.getElementById('feedbackDown');
+
+    feedbackUp.addEventListener('click', () => {
+      feedbackUp.classList.add('selected-up');
+      feedbackInline.classList.add('submitted');
+      // In production, send to backend
+      console.log('Feedback: positive', { prompt: promptInput.value, model: document.getElementById('resultTitle').textContent });
+    });
+
+    feedbackDown.addEventListener('click', () => {
+      feedbackDown.classList.add('selected-down');
+      feedbackInline.classList.add('submitted');
+      // In production, send to backend
+      console.log('Feedback: negative', { prompt: promptInput.value, model: document.getElementById('resultTitle').textContent });
+    });
+
+    // Reset feedback when showing new results
+    function resetFeedback() {
+      feedbackInline.classList.remove('submitted');
+      feedbackUp.classList.remove('selected-up');
+      feedbackDown.classList.remove('selected-down');
+    }
+
+    // ===========================================
+    // COMMUNITY LEADERBOARD
+    // ===========================================
+    const LEADERBOARD_DATA = [
+      { prompt: "Write compelling product descriptions for e-commerce", model: "claude", votes: 847 },
+      { prompt: "Debug and optimize slow SQL queries", model: "cursor", votes: 723 },
+      { prompt: "Research and summarize academic papers", model: "perplexity", votes: 691 },
+      { prompt: "Generate social media graphics and ads", model: "midjourney", votes: 634 },
+      { prompt: "Build a full-stack app from scratch", model: "chatgpt", votes: 582 },
+    ];
+
+    const leaderboardGrid = document.getElementById('leaderboardGrid');
+
+    function renderLeaderboard() {
+      leaderboardGrid.innerHTML = LEADERBOARD_DATA.map((item, index) => {
+        const model = AI_MODELS[item.model];
+        return `
+          <div class="leaderboard-item">
+            <span class="leaderboard-rank ${index < 3 ? 'top-3' : ''}">#${index + 1}</span>
+            <img class="leaderboard-logo" src="${model.logo}" alt="${model.name}" onerror="this.style.display='none'">
+            <div class="leaderboard-info">
+              <p class="leaderboard-prompt">"${item.prompt}"</p>
+              <span class="leaderboard-model">${model.name} ${model.version}</span>
+            </div>
+            <div class="leaderboard-votes">
+              <span class="icon">👍</span>
+              <span>${item.votes}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Initialize leaderboard
+    renderLeaderboard();
+
+    // ===========================================
+    // GUIDED QUIZ
+    // ===========================================
+    const quizView = document.getElementById('quizView');
+    const quizBackBtn = document.getElementById('quizBackBtn');
+    const quizLink = document.getElementById('quizLink');
+    const quizQuestion = document.getElementById('quizQuestion');
+    const quizOptions = document.getElementById('quizOptions');
+    const quizProgressBar = document.getElementById('quizProgressBar');
+    const quizStepText = document.getElementById('quizStepText');
+
+    const QUIZ_QUESTIONS = [
+      {
+        question: "What's the main thing you want to accomplish?",
+        options: [
+          { icon: "✍️", title: "Write or edit content", desc: "Emails, articles, reports, creative writing", tags: ['writing'] },
+          { icon: "💻", title: "Write or debug code", desc: "Programming, scripting, development", tags: ['coding'] },
+          { icon: "🔍", title: "Research or find information", desc: "Facts, current events, deep dives", tags: ['research'] },
+          { icon: "🎨", title: "Create images or visuals", desc: "Art, graphics, photos, designs", tags: ['images'] },
+          { icon: "📊", title: "Analyze data or documents", desc: "Spreadsheets, PDFs, reports", tags: ['analysis'] },
+          { icon: "💬", title: "Just chat or brainstorm", desc: "General conversation, ideas", tags: ['general'] }
+        ]
+      },
+      {
+        question: "How important is having the latest information?",
+        options: [
+          { icon: "🔴", title: "Critical - I need real-time data", desc: "News, stocks, current events", tags: ['realtime'] },
+          { icon: "🟡", title: "Helpful but not essential", desc: "Recent but not breaking news", tags: ['recent'] },
+          { icon: "🟢", title: "Not important", desc: "Historical or timeless topics", tags: ['static'] }
+        ]
+      },
+      {
+        question: "What's your priority?",
+        options: [
+          { icon: "✨", title: "Quality and accuracy", desc: "Take time to get it right", tags: ['quality'] },
+          { icon: "⚡", title: "Speed and convenience", desc: "Quick answers, fast iteration", tags: ['speed'] },
+          { icon: "🔒", title: "Privacy and security", desc: "Sensitive data, local processing", tags: ['privacy'] },
+          { icon: "💰", title: "Free or low cost", desc: "Budget-conscious", tags: ['free'] }
+        ]
+      },
+      {
+        question: "How technical is your task?",
+        options: [
+          { icon: "👶", title: "Not technical at all", desc: "Plain language, everyday tasks", tags: ['simple'] },
+          { icon: "👤", title: "Somewhat technical", desc: "Some jargon, specific formats", tags: ['moderate'] },
+          { icon: "🧑‍💻", title: "Very technical", desc: "Code, APIs, complex systems", tags: ['technical'] }
+        ]
+      },
+      {
+        question: "How long is your content?",
+        options: [
+          { icon: "📝", title: "Short", desc: "Quick questions, brief responses", tags: ['short'] },
+          { icon: "📄", title: "Medium", desc: "A few paragraphs, standard docs", tags: ['medium'] },
+          { icon: "📚", title: "Long", desc: "Large documents, books, codebases", tags: ['long'] }
+        ]
+      }
+    ];
+
+    let quizStep = 0;
+    let quizAnswers = [];
+
+    function showQuiz() {
+      quizStep = 0;
+      quizAnswers = [];
+      document.body.classList.add('showing-quiz');
+      quizView.classList.add('active');
+      renderQuizStep();
+      window.scrollTo(0, 0);
+    }
+
+    function hideQuiz() {
+      document.body.classList.remove('showing-quiz');
+      quizView.classList.remove('active');
+    }
+
+    function renderQuizStep() {
+      const q = QUIZ_QUESTIONS[quizStep];
+      
+      // Update progress
+      const progress = ((quizStep + 1) / QUIZ_QUESTIONS.length) * 100;
+      quizProgressBar.style.width = `${progress}%`;
+      quizStepText.textContent = `Question ${quizStep + 1} of ${QUIZ_QUESTIONS.length}`;
+      
+      // Update question
+      quizQuestion.textContent = q.question;
+      
+      // Render options
+      quizOptions.innerHTML = q.options.map((opt, i) => `
+        <button class="quiz-option" data-index="${i}">
+          <span class="quiz-option-icon">${opt.icon}</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">${opt.title}</div>
+            <div class="quiz-option-desc">${opt.desc}</div>
+          </div>
+        </button>
+      `).join('');
+      
+      // Add click handlers
+      quizOptions.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.addEventListener('click', () => selectQuizOption(parseInt(btn.dataset.index)));
+      });
+    }
+
+    function selectQuizOption(index) {
+      const q = QUIZ_QUESTIONS[quizStep];
+      quizAnswers.push(q.options[index].tags);
+      
+      // Highlight selection briefly
+      const selected = quizOptions.querySelectorAll('.quiz-option')[index];
+      selected.classList.add('selected');
+      
+      setTimeout(() => {
+        if (quizStep < QUIZ_QUESTIONS.length - 1) {
+          quizStep++;
+          renderQuizStep();
+        } else {
+          // Quiz complete - calculate recommendation
+          finishQuiz();
+        }
+      }, 300);
+    }
+
+    function finishQuiz() {
+      // Flatten all selected tags
+      const allTags = quizAnswers.flat();
+      
+      // Score each model based on quiz answers
+      const quizScores = {};
+      for (const modelId of Object.keys(AI_MODELS)) {
+        quizScores[modelId] = 0;
+      }
+      
+      // Apply scoring rules based on tags
+      if (allTags.includes('writing')) {
+        quizScores.claude += 30;
+        quizScores.chatgpt += 20;
+      }
+      if (allTags.includes('coding')) {
+        quizScores.cursor += 35;
+        quizScores.copilot += 30;
+        quizScores.chatgpt += 15;
+        quizScores.claude += 10;
+      }
+      if (allTags.includes('research')) {
+        quizScores.perplexity += 35;
+        quizScores.gemini += 20;
+      }
+      if (allTags.includes('images')) {
+        quizScores.midjourney += 40;
+        quizScores.dalle += 35;
+      }
+      if (allTags.includes('analysis')) {
+        quizScores.claude += 25;
+        quizScores.gemini += 25;
+        quizScores.chatgpt += 15;
+      }
+      if (allTags.includes('general')) {
+        quizScores.chatgpt += 25;
+        quizScores.claude += 20;
+      }
+      
+      if (allTags.includes('realtime')) {
+        quizScores.perplexity += 25;
+        quizScores.grok += 20;
+      }
+      if (allTags.includes('privacy')) {
+        quizScores.ollama += 40;
+      }
+      if (allTags.includes('free')) {
+        quizScores.gemini += 15;
+        quizScores.perplexity += 10;
+        quizScores.ollama += 15;
+      }
+      
+      if (allTags.includes('quality')) {
+        quizScores.claude += 15;
+        quizScores.midjourney += 10;
+      }
+      if (allTags.includes('speed')) {
+        quizScores.chatgpt += 15;
+        quizScores.perplexity += 10;
+      }
+      
+      if (allTags.includes('technical')) {
+        quizScores.cursor += 15;
+        quizScores.claude += 10;
+      }
+      if (allTags.includes('long')) {
+        quizScores.gemini += 20;
+        quizScores.claude += 15;
+      }
+      
+      // Build ranked list
+      const ranked = Object.entries(quizScores)
+        .map(([id, score]) => ({
+          id,
+          ...AI_MODELS[id],
+          score
+        }))
+        .sort((a, b) => b.score - a.score);
+      
+      // Normalize for display
+      const maxScore = Math.max(ranked[0].score, 1);
+      ranked.forEach((model, index) => {
+        if (model.score === maxScore) {
+          model.displayScore = 95;
+        } else if (model.score > 0) {
+          const ratio = model.score / maxScore;
+          model.displayScore = Math.round(55 + (ratio * 35)) - (index * 2);
+        } else {
+          model.displayScore = 45 - (index * 3);
+        }
+        model.displayScore = Math.max(40, model.displayScore);
+      });
+      
+      // Build a prompt description from quiz answers
+      const promptDesc = buildQuizPromptDescription(allTags);
+      promptInput.value = promptDesc;
+      
+      // Hide quiz, show results
+      hideQuiz();
+      showResults(ranked);
+    }
+
+    function buildQuizPromptDescription(tags) {
+      let parts = [];
+      
+      if (tags.includes('writing')) parts.push('content writing and editing');
+      if (tags.includes('coding')) parts.push('coding and development');
+      if (tags.includes('research')) parts.push('research and information gathering');
+      if (tags.includes('images')) parts.push('image and visual creation');
+      if (tags.includes('analysis')) parts.push('data and document analysis');
+      if (tags.includes('general')) parts.push('general assistance and brainstorming');
+      
+      if (parts.length === 0) parts.push('general tasks');
+      
+      let desc = `Looking for help with ${parts.join(', ')}`;
+      
+      if (tags.includes('realtime')) desc += ', with real-time information';
+      if (tags.includes('privacy')) desc += ', with privacy as a priority';
+      if (tags.includes('technical')) desc += ', for technical work';
+      if (tags.includes('long')) desc += ', handling long-form content';
+      
+      return desc + '.';
+    }
+
+    // Quiz event listeners
+    quizLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showQuiz();
+    });
+
+    quizBackBtn.addEventListener('click', hideQuiz);
+
+    // ===========================================
+    // ADVERTISE MODAL
+    // ===========================================
+    const advertiseLink = document.getElementById('advertiseLink');
+    const advertiseModal = document.getElementById('advertiseModal');
+    const advertiseClose = document.getElementById('advertiseClose');
+    const advertiseForm = document.getElementById('advertiseForm');
+
+    advertiseLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      advertiseModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    advertiseClose.addEventListener('click', () => {
+      advertiseModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    advertiseModal.addEventListener('click', (e) => {
+      if (e.target === advertiseModal) {
+        advertiseModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Handle form submission
+    advertiseForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(advertiseForm);
+      const submitBtn = advertiseForm.querySelector('.advertise-submit');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = 'Sending...';
+      submitBtn.disabled = true;
+      
+      try {
+        const response = await fetch(advertiseForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          // Show success state
+          advertiseForm.innerHTML = `
+            <div class="form-success">
+              <div class="form-success-icon">✓</div>
+              <h3>Thanks for reaching out!</h3>
+              <p>We'll get back to you within 24 hours.</p>
+            </div>
+          `;
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        alert('Something went wrong. Please try again or email us directly at dylanbale@gmail.com');
+      }
+    });
+
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && advertiseModal.classList.contains('active')) {
+        advertiseModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
