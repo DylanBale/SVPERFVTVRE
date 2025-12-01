@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1200px;
+      height: 630px;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Spotlight */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 80%;
+      background: radial-gradient(ellipse at center, rgba(99, 179, 237, 0.15) 0%, transparent 70%);
+      filter: blur(60px);
+    }
+    
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      background: linear-gradient(
+        135deg,
+        #1a1a2e 0%,
+        #4a5568 10%,
+        #a0aec0 25%,
+        #63b3ed 40%,
+        #e2e8f0 55%,
+        #63b3ed 70%,
+        #4a5568 85%,
+        #1a1a2e 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .tagline {
+      font-size: 2rem;
+      color: #e8e8e8;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .subtitle {
+      font-size: 1.25rem;
+      color: #888;
+      max-width: 700px;
+      text-align: center;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .models {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .model-badge {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      padding: 0.75rem 1.5rem;
+      color: #888;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">SVPERFVTVRE</div>
+  <div class="tagline">Find the Best AI Model for Your Task</div>
+  <div class="subtitle">Describe what you're trying to accomplish. Get instant recommendations.</div>
+  <div class="models">
+    <div class="model-badge">Claude</div>
+    <div class="model-badge">ChatGPT</div>
+    <div class="model-badge">Gemini</div>
+    <div class="model-badge">Midjourney</div>
+    <div class="model-badge">Cursor</div>
+  </div>
+</body>
+</html>

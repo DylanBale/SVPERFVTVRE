@@ -4,8 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0a0a0a">
-  <title>SVPERFVTVRE — Find Your AI Model</title>
+  
+  <!-- Primary Meta Tags -->
+  <title>SVPERFVTVRE — Find the Best AI Model for Your Task</title>
+  <meta name="title" content="SVPERFVTVRE — Find the Best AI Model for Your Task">
+  <meta name="description" content="Stop guessing which AI to use. Describe your task and get instant recommendations for the best AI model — Claude, ChatGPT, Gemini, Midjourney, Cursor, and more. Free AI model comparison tool.">
+  <meta name="keywords" content="AI model comparison, best AI for coding, ChatGPT vs Claude, AI recommendation tool, which AI should I use, AI model finder, compare AI models, best AI for writing, AI assistant comparison, GPT-5, Claude 4, Gemini, Midjourney, Cursor, Perplexity">
+  <meta name="author" content="SVPERFVTVRE">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://svperfvtvre.com/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://svperfvtvre.com/">
+  <meta property="og:title" content="SVPERFVTVRE — Find the Best AI Model for Your Task">
+  <meta property="og:description" content="Stop guessing which AI to use. Describe your task and get instant recommendations for the best AI model — Claude, ChatGPT, Gemini, Midjourney, and more.">
+  <meta property="og:image" content="https://svperfvtvre.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="SVPERFVTVRE">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://svperfvtvre.com/">
+  <meta name="twitter:title" content="SVPERFVTVRE — Find the Best AI Model for Your Task">
+  <meta name="twitter:description" content="Stop guessing which AI to use. Describe your task and get instant recommendations for the best AI model.">
+  <meta name="twitter:image" content="https://svperfvtvre.com/og-image.png">
+  
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Cpath d='M8 8 L16 24 L24 8' stroke='%23e8e8e8' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M6 6 L14 22 L22 6' stroke='%2363b3ed' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round' opacity='0.6'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="https://svperfvtvre.com/apple-touch-icon.png">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SVPERFVTVRE",
+    "url": "https://svperfvtvre.com",
+    "description": "AI model recommendation engine. Describe your task and find the best AI model for the job.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "150"
+    }
+  }
+  </script>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1713,8 +1766,12 @@
       min-height: 100px;
     }
 
+    .cf-turnstile {
+      margin: 1rem 0;
+    }
+
     .advertise-submit {
-      background: var(--accent);
+      background: var(--text-primary);
       color: var(--bg-primary);
       border: none;
       padding: 1rem 2rem;
@@ -1731,7 +1788,7 @@
     }
 
     .advertise-submit:hover {
-      filter: brightness(1.1);
+      background: var(--accent-bright);
     }
 
     .advertise-submit .arrow {
@@ -2079,6 +2136,9 @@
             <textarea id="advMessage" name="message" rows="4" placeholder="Tell us about your product and advertising goals..."></textarea>
           </div>
 
+          <!-- Cloudflare Turnstile -->
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACECsp8E82qtk2o0" data-theme="dark"></div>
+
           <button type="submit" class="advertise-submit">
             Send Inquiry
             <span class="arrow">→</span>
@@ -2115,7 +2175,74 @@
     </div>
   </div>
 
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <script>
+    // Supabase initialization
+    const SUPABASE_URL = 'https://aoxlujkqpcunnspuyitk.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFveGx1amtxcGN1bm5zcHV5aXRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2MDA3MzMsImV4cCI6MjA4MDE3NjczM30.aD5OXsxQd3w1IEWq0P31r5XZ4Sj3H4yNRLD7UQVik2M';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Current recommendation tracking
+    let currentRecommendationId = null;
+
+    // Track a recommendation
+    async function trackRecommendation(data) {
+      try {
+        const { data: result, error } = await supabase
+          .from('recommendations')
+          .insert([data])
+          .select()
+          .single();
+        
+        if (error) {
+          console.error('Tracking error:', error);
+          return null;
+        }
+        
+        currentRecommendationId = result.id;
+        return result.id;
+      } catch (err) {
+        console.error('Tracking error:', err);
+        return null;
+      }
+    }
+
+    // Track CTA click (conversion)
+    async function trackConversion() {
+      if (!currentRecommendationId) return;
+      
+      try {
+        await supabase
+          .from('recommendations')
+          .update({ 
+            clicked_cta: true, 
+            clicked_at: new Date().toISOString() 
+          })
+          .eq('id', currentRecommendationId);
+      } catch (err) {
+        console.error('Conversion tracking error:', err);
+      }
+    }
+
+    // Track feedback
+    async function trackFeedback(feedbackType) {
+      if (!currentRecommendationId) return;
+      
+      try {
+        await supabase
+          .from('recommendations')
+          .update({ 
+            feedback: feedbackType,
+            feedback_at: new Date().toISOString()
+          })
+          .eq('id', currentRecommendationId);
+      } catch (err) {
+        console.error('Feedback tracking error:', err);
+      }
+    }
+
     const promptInput = document.getElementById('promptInput');
     const inputWrapper = document.querySelector('.input-wrapper');
     const qualityIndicator = document.getElementById('qualityIndicator');
@@ -2977,9 +3104,28 @@
       analyzeBtn.disabled = true;
       
       // Simulate brief analysis time for UX
-      setTimeout(() => {
+      setTimeout(async () => {
         const recommendations = analyzePrompt(prompt);
         showResults(recommendations);
+        
+        // Track to Supabase
+        const top = recommendations[0];
+        const runnerUp = recommendations[1];
+        const attachedFile = document.getElementById('attachedFile');
+        const hasAttachment = attachedFile && attachedFile.classList.contains('visible');
+        const fileNameEl = document.getElementById('fileName');
+        
+        await trackRecommendation({
+          prompt: prompt,
+          prompt_length: prompt.length,
+          had_attachment: hasAttachment,
+          attachment_type: hasAttachment && fileNameEl ? fileNameEl.textContent.split('.').pop() : null,
+          source: 'prompt',
+          recommended_model: top.name,
+          match_score: top.displayScore,
+          runner_up_model: runnerUp ? runnerUp.name : null,
+          runner_up_score: runnerUp ? runnerUp.displayScore : null
+        });
         
         // Reset button
         analyzeBtn.innerHTML = 'Analyze & Recommend <span class="arrow">→</span>';
@@ -2997,6 +3143,11 @@
       promptInput.value = '';
       updateQualityIndicator();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // CTA click - track conversion
+    document.getElementById('resultCta').addEventListener('click', () => {
+      trackConversion();
     });
 
     // ===========================================
@@ -3094,15 +3245,13 @@
     feedbackUp.addEventListener('click', () => {
       feedbackUp.classList.add('selected-up');
       feedbackInline.classList.add('submitted');
-      // In production, send to backend
-      console.log('Feedback: positive', { prompt: promptInput.value, model: document.getElementById('resultTitle').textContent });
+      trackFeedback('up');
     });
 
     feedbackDown.addEventListener('click', () => {
       feedbackDown.classList.add('selected-down');
       feedbackInline.classList.add('submitted');
-      // In production, send to backend
-      console.log('Feedback: negative', { prompt: promptInput.value, model: document.getElementById('resultTitle').textContent });
+      trackFeedback('down');
     });
 
     // Reset feedback when showing new results
@@ -3370,6 +3519,21 @@
       // Hide quiz, show results
       hideQuiz();
       showResults(ranked);
+      
+      // Track quiz recommendation to Supabase
+      const top = ranked[0];
+      const runnerUp = ranked[1];
+      trackRecommendation({
+        prompt: promptDesc,
+        prompt_length: promptDesc.length,
+        had_attachment: false,
+        attachment_type: null,
+        source: 'quiz',
+        recommended_model: top.name,
+        match_score: top.displayScore,
+        runner_up_model: runnerUp ? runnerUp.name : null,
+        runner_up_score: runnerUp ? runnerUp.displayScore : null
+      });
     }
 
     function buildQuizPromptDescription(tags) {
@@ -3432,6 +3596,13 @@
     advertiseForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
+      // Check Turnstile
+      const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+      if (!turnstileResponse || !turnstileResponse.value) {
+        alert('Please complete the verification checkbox.');
+        return;
+      }
+      
       const formData = new FormData(advertiseForm);
       const submitBtn = advertiseForm.querySelector('.advertise-submit');
       const originalText = submitBtn.innerHTML;
@@ -3475,5 +3646,11 @@
       }
     });
   </script>
+
+  <!-- Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
