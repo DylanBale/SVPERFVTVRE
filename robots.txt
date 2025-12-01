@@ -1,0 +1,6 @@
+# robots.txt for svperfvtvre.com
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://svperfvtvre.com/sitemap.xml

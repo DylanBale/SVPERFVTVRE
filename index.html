@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WRQHDZ32FH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WRQHDZ32FH');
+  </script>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0a0a0a">
   
@@ -1576,6 +1586,76 @@
       }
     }
 
+    /* SEO Content Section */
+    .seo-content {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .seo-content h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .seo-content h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .seo-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .seo-content ul {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 1rem 0 1rem 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .seo-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-primary);
+      padding: 0.75rem 0;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item p {
+      padding-left: 0;
+    }
+
     /* Footer */
     footer {
       text-align: center;
@@ -2068,6 +2148,8 @@
 
     <footer>
       © 2025 SVPERFVTVRE
+      <span class="footer-divider">·</span>
+      <a href="/faq.html" class="footer-link">FAQ</a>
       <span class="footer-divider">·</span>
       <a href="#" class="footer-link" id="advertiseLink">Advertise with us</a>
     </footer>
